@@ -7,9 +7,9 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Minimal Mistakes"
+title                    : "Virtual Dump"
 title_separator          : "-"
-name                     : &name "Michael Rose"
+name                     : &name "Thulana Kannangara"
 description              : &description "Personal space of a tech junky"
 url                      : https://thulana.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "/" # the subpath of your site, e.g. "/blog"
@@ -71,15 +71,15 @@ social:
 
 # Analytics
 analytics:
-  provider               : "google-universal" # false (default), "google", "google-universal", "custom"
+  provider               : "google" # false (default), "google", "google-universal", "custom"
   google:
-    tracking_id          : "UA-2011187-3"
+    tracking_id          : "UA-155001343-1"
 
 
 # Site Author
 author:
   name             : *name
-  avatar           : "michael-rose.jpg"
+  avatar           : "thulana.jpg"
   bio              : "Tech junky"
   location         : "Sri Lanka"
   email            :
