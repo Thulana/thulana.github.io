@@ -8,7 +8,7 @@ author_profile: true
 {% include base_path %}
 {% capture written_year %}'None'{% endcapture %}
 {% assign all_posts = site.misc | concat: site.education | concat: site.tech %}
-{% assign all_posts = all_posts | sort: 'title' %}
+{% assign all_posts = all_posts | sort: written_year %}
 {% for post in all_posts %}
   {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
   {% if year != written_year %}

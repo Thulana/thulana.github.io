@@ -30,6 +30,9 @@ main:
   - title: "Terms &amp; Privacy Policy"
     url: /terms/
 
+  - title: "Portfolio"
+    url: /portfolio/my-portfolio/
+
   - title: "About"
     url: /about/
 
