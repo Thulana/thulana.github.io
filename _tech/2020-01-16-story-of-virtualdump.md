@@ -1,67 +1,43 @@
 ---
-title: "MySQL - write a search query with dynamic parameters"
+title: "How to create your own blog with zero cost - Story of virtualdump"
 ---
 
-Hey guys,
-You would probably think now, what the hell I know this. Yes this is simple, let me show something worth reading for. 
+Who won't like your own blog in your own domain. But to do all this you needs to do spent few bucks. If not you can go with a popular blogging site like **Medium**.  But every techie would love their own space. So, here is the story of  [Virtual Dump](http://virtualdump.tk/)
 
-Lets take an example, I have  table named Bill with below attributes.
+What you will need,
+- GitHub account -  [Sign up](https://github.com/)
+- FreeNom account - [Sign up](https://my.freenom.com/)
+- Cloud-flare account - [Sign up](https://www.cloudflare.com/) 
+- Precious time of yours :stuck_out_tongue_winking_eye:
 
-<figure>
-  <img src="{{ base_path }}/images/post1-pic1.PNG" alt="Example table">
-</figure>
+FYI this is a high level walk-through about how to get it up and running, i will share all the resources, you have to do it your own. Add a little touch of yours to it, don't do what everyone does. 
 
-What if you want to search this table using **ID**, **YEAR** and **CONNECTIONID**. What will be your approach?? 
-If i send year = 2016 and connectionId=C001 it should give all the bills in 2016 with connection id C001 and with any ID, as we didn't specify it. we can do this like this.
-```sql
-SELECT * FROM Bill WHERE year = 2016  and connectionId=C001 ;
-```
- 
+First things First, lets get your blog up and running locally before we move into deploying etc.
 
-If we use this how can we search with bill ID. This is not working. Even with 3 parameters we can find 7 different searching criteria. if parameters are A ,B, and C
+## Build your static site
+I'm gonna use GitHub pages to make my static website. You can build your site from ground up by doing everything manually by writing HTML, CSS and JavaScript. But it will take forever, You don't need that. One of the first principles of programming is **Code Re-usability**.  Which means, you don't need to write something which is already there. Just use the damn thing. So lets talk about the frameworks you can use with GitHub pages.  
+There are so many static site generators but there is one which is backed by GitHub itself, [jekyll](https://jekyllrb.com/). It uses cool templating  language [Liquid](https://jekyllrb.com/docs/liquid/) which will gonna make your life so much easier. There is two approaches you can take,
 
-1. A
-2. B
-3. C
-4. AB
-5. AC
-6. BC
-7. ABC
+ - Build the site with a fresh jekyll project - Good approach, lot to learn 
+ - Be a smuch like me and use a free jekyll theme and customize - Easy though
 
-One approach is we identify if parameters are null before hand and switch through all the combinations and define query for each one.
-```java
-if( connectionID != null and Id = null and year = null){
+So I'm gonna go with the shortcut here.  Here is a good collection of themes [http://jekyllthemes.org](http://jekyllthemes.org/) where you can choose one for yourself.  I went with [mmistakes](https://mmistakes.github.io/) . Thanks [Michael Rose](https://twitter.com/mmistakes) for this cool theme. So lemme clear up, why using a theme is really easy.
 
-           SELECT * FROM Bill WHERE  connectionId = ? ;
+ - No needs to do the ground work such as headers, footers and page configurations as they are already done.
+ - No needs to worry about Facebook commenting, post sharing, Google analytics, google adsense, basically most of the config stuff that will take days to implement. 
 
-}else if(connectionID = null and Id != null and year = null){
+So what you have to do is clone such repo and configure as you want. Once you are done, you have to push it to github. Before do that log on to GitHub and create a GitHub page repository.  You can learn how to do that here [https://pages.github.com/](https://pages.github.com/). It's same as creating a usual GitHub repository. Only difference is repository name should be in the format of *username.github.io*. Once you have done that inside your local website folder, change the git remote origin like this,
 
-            SELECT * FROM Bill WHERE id = ? ;
+`
+git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+`
 
-}......................................
+Once you have done that commit all the changes and push to the origin. Then go to http://username.github.io/ and you will see that your static site is up and running.  :satisfied:
 
-```
+Let's move on to next phase.
 
+##  Add a Cool domain
 
-This is waste of time. Then what we do?? Actually we can write all these in one line. Here is how we do this.
+As we are going to do everything without wasting a penny, then we must find a free domain provider.  **TK** domains are free but not for long. You can use them for sometime, but when the traffic increases, they tends to pull the plug. :grimacing: Everything in life comes with a price. Anyway lets get this up with a semi-free domain. 
 
-**Step 1 :**
-
-First we define a convention. which is, if one parameter carries null value then we replace it with a negative integer. ( No matter the type of field we can store negative integer and convert it to integer. ) 
-
-**Step 2 :**
-
-Then write the sql query like this.
-
-billID, connectionID and year (underlined) are the variables with the search parameters. They are defined under the above convention. Question marks will be filled out when preparing the statement to stop SQL Injection. (i think you already know this)
-
-```sql
-SELECT * FROM  Bill WHERE ("+billID+"<0 or id=?) and ("+connectionID+"<0 or  connectionID=?) and ("+year+"<0 or year=?) ;
-
-```
-
-Lets see how it works,
-
-if one parameter is null ( billID = null ) it carries negative value ( billID = -1) then that condition will be satisfied ( (-1< 0 or id=?)= true). So the search will not use that parameter in search. if parameter is not null  ( billID != null ) then it carries a positive value  ( billID = 123). So the part of the condition will be not be true. ((123 < 0) false ) So condition will only be true if other part is satisfied (id = ?). This is what we wanted right ?
-
-Hope this helps thanks !!!!!!!!!!!!!!!
+What you have to do is go to [FreeNom](https://my.freenom.com/) and create a account if you don't have one already. After that you can search for the domain and buy it for free. After that you have to route the traffic through this domain to your gh page. As you may already know this process is called **domain name resolution**. What we do here is we add the Domian  -----> gh page mapping to known name servers. Then when we search the domain it will resolved by the name servers to the gh page url. As we are referring our gh page using the URL, we call this CNAME record. Enough of this side talk, lets do this.
