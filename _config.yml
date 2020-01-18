@@ -54,7 +54,7 @@ yandex_site_verification :
 
 # Social Sharing
 twitter:
-  username               : &twitter "thulana"
+  username               : &twitter "thulanaK"
 facebook:
   username               : &facebook "thulana.kannangara"
   app_id                 :
@@ -66,7 +66,7 @@ social:
   type                   : # Person or Organization (defaults to Person)
   name                   : # If the user or organization name differs from the site's name
   links: # An array of links to social media profiles
-    - "https://twitter.com/thulana"
+    - "https://twitter.com/thulanaK"
     - "https://facebook.com/thulana.kannangara"
 
 # Analytics
