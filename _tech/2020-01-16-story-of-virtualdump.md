@@ -40,9 +40,9 @@ Let's move on to next phase.
 
 As we are going to do everything without wasting a penny, then we must find a free domain provider.  **TK** domains are free but not for long. You can use them for sometime, but when the traffic increases, they tends to pull the plug. :grimacing: Everything in life comes with a price. Anyway lets get this up with a semi-free domain. 
 
-What you have to do is go to [FreeNom](https://my.freenom.com/) and create a account if you don't have one already. After that you can search for the domain and buy it for free. After that you have to route the traffic through this domain to your gh page. As you may already know this process is called **domain name resolution**. What we do here is we add the Domian  -----> gh page mapping to known name servers. Then when we search the domain it will resolved by the name servers to the gh page url. As we are referring our gh page using the URL, we call this CNAME record. Enough of this side talk, lets do this.
+What you have to do is go to [FreeNom](https://my.freenom.com/) and create a account if you don't have one already. After that you can search for the domain and buy it for free. After that you have to route the traffic through this domain to your gh page. As you may already know this process is called **domain name resolution**. What we do here is we add the `Domian  -----> gh page` mapping to known name servers. Then when we search the domain it will resolved by the name servers to the gh page url. As we are referring our gh page using the URL, we call this CNAME record. Enough of this side talk, lets do this.
 
-You can either use freenom dns or you can use another service. Lets go with [cloudflare](https://www.cloudflare.com/) for now. Once you created a cloudflare account, what you have to do is add your domain to the cloudflare. After that you can configure the dns. In the DNS management section add the www  record and root domain record to your blog as below. www record helps to route all the www.blogname.tk requests to your github page and the root record ( root -> blogname.tk ) will help to route blogname.tk requests. Once you are done, you have to add the cloudflare domain name servers to your domain provider. Do you see the two Cloudflare nameservers provided below, Yeah that's it. 
+You can either use freenom dns or you can use another dns service. Lets go with [cloudflare](https://www.cloudflare.com/) for now. Once you created a cloudflare account, what you have to do is add your domain to the cloudflare. After that you can configure the dns. In the DNS management section add the www  record and root domain record to your blog as below. www record helps to route all the www.blogname.tk requests to your github page and the root record ( root -> blogname.tk ) will help to route blogname.tk requests. Once you are done, you have to add the cloudflare domain name servers to your domain provider. Do you see the two Cloudflare nameservers provided below, Yeah that's it. 
 
 <figure>
   <img src="{{ base_path }}/images/post2-pic1.png" alt="setup dns">
@@ -60,7 +60,7 @@ All set then, actually it's not. :grin: You gotta to another small thing. Now th
   <img src="{{ base_path }}/images/post2-pic3.png" alt="Add custom domain to gh page">
 </figure>
 
-Usually it take some time ( hours to a day max) all DNS configurations to sink in. After that your blog should be alive on that domain. 
+Usually it take some time ( hours to a day max) to all DNS configurations to sink in. After that your blog should be alive on that domain. 
 
 
 This is how you could get your blog up and running in a really short time. After this, it's all up to you. When you get lots of traffic, you may need to move on to a paid domain. You can experiment here onwords. Lemme give you few homeworks to try on,
