@@ -1,5 +1,5 @@
 ---
-title: "How to publish your resume to github pages ( CV as a code & CI/CD for your CV )"
+title: "CV as a code & CI/CD for your CV"
 ---
 I know we are used to keep our CV (resume) in WORD format or in pdf. Most of us techies won't do the same. We love to keep everything as a code ( I mean literally everything :sweat_smile: ) Infrastructure as a code, platform as a code, service as a code, network as a code, why not your CV as a code ?
 
@@ -12,7 +12,7 @@ So let's keep our CV as a code and discuss little bit why it is kinda easy and u
 
 One of the perks of keeping something as a code is the version control capability. We can go back to any edit that we did in ease.  As an example, when you need a customized CV, create a new branch from the base branch and crack on. Not only that you can automate the building process so that you don't need to worry about that. Yeah it's pretty easy to customize and do whatever you want. If u can't find something, write it yourself and share so others don't have to. That's the beauty of keeping something as a code, let's get cracking.
 
-If we are going to keep the CV as a code, first question is which language should i use to code? LaTeX is not so much as language but it's pretty close. LaTeX is a document preparing system where you can write in plain text and format using markups. So anyone can use LaTeX as it uses plain text, and you can import stuff and write functions and much more too. 
+If we are going to keep the CV as a code, first question is which language should i use to code? LaTeX is not so much a language but it's pretty close. LaTeX is a document preparing system where you can write in plain text and format using markups. So anyone can use LaTeX as it uses plain text, and you can import stuff and write functions and much more too. 
 
 ## Where to start ?
 
