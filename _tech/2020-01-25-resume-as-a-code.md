@@ -109,16 +109,22 @@ I have used a linux environment and pre-install all the required packages.  Once
     echo "pushing to my blog"  
     commit_website_files
 
-As you can see what I have done here is clone my blog repository and add the freshly built cv to my website assets and commit. Once it's done, latest version of your CV will be available in your blog. I have added the GITHUB_PASSWORD and GITHUB_USER as secure variables in Travis. So they won't be visible to anybody. :wink:Check inside Travis settings, and you will find it. Now all set. For every small change in your CV, your blog will be updated with the latest one. 
+As you can see what I have done here is clone my blog repository and add the freshly built cv to my website assets and commit. Once it's done, latest version of your CV will be available in your blog. I have added the GITHUB_PASSWORD and GITHUB_USER as secure variables in Travis. So they won't be visible to anybody. :wink:Check inside Travis settings, and you will find it. 
 
 <figure>
   <img src="{{ base_path }}/images/post3-pic1.png" alt="Add secure variables in Travis">
 </figure>
 
+Now all set. For every small change in your CV, your blog will be updated with the latest one. You can checkout my portfolio with the resume and the CV repository below,  
+
+
 Checkout my portfolio here : [my-portfolio](http://www.virtualdump.tk/portfolio/my-portfolio/)
+
 Checkout my CV repository here : [My-CV](https://github.com/Thulana/My-CV)
 
-If you think this is cool or find interesting, don't forget to checkout my other articles. Let me know what you think.
+If you think this is cool or find interesting, don't forget to checkout my other articles. Let me know what you think. If there is anything you needs to know, Please contact me. 
+
+Cheerio !! :smile:
 
 
 				
