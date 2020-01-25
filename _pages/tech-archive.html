@@ -6,7 +6,8 @@ author_profile: false
 ---
 
 {% include base_path %}
-
-{% for post in site.tech %}
+{% assign all_posts = site.misc | concat: site.education | concat: site.tech %}
+{% assign all_posts = all_posts | sort: 'published_at' | reverse %}
+{% for post in all_posts %}
   {% include archive-single.html %}
 {% endfor %}
