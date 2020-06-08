@@ -9,7 +9,7 @@ I work in a software organization where change is frequent, to say the least. As
   <img src="{{ base_path }}/images/post5-1.jpeg" alt="BDD">
 </figure>
 
-##Background
+## Background
 
 When working with an enterprise application powered by microservices you can end up with a lot of sub-systems designed to handle different parts of a user's experience.
 
@@ -21,7 +21,7 @@ In an e-commerce setting these microservices might be scoped to manage users, or
 
 An example would be a user wanting to know the delivery ETA of an order while in the order details page. In order to generate an ETA for the delivery (as per the diagram above), the delivery microservice would need to fetch the order stored with the order management service, cross-check its location with the warehouse and logistics services, fetch driver information and estimate a delivery time depending on a GPS marker. That’s four different sub-systems working in unison to populate a label on the user’s screen with the delivery information of an order.
 
-##The Problem
+## The Problem
 
 As and when your product grows, so will the requirements of your target users and in extension the demands of your product owner. This is when our software organization started to expand and grow, breaking off into smaller specialized business units (or verticals) focused on developing a part of a user experience like tracking the delivery of an order rather than taking tickets from a common project backlog in a round-robin manner.
 
@@ -35,7 +35,7 @@ In a unit test suite, the problem with mocking every dependency is that if you c
 
 You might end up breaking an already working flow belonging to a team that handles order placement when implementing a feature related to order tracking in the order management service.
 
-###But isn’t that why we have Integration Tests?
+### But isn’t that why we have Integration Tests?
 
 True. But once you’ve included tests for every edge-case, bug, and race-condition in addition to the existing cases in your integration test suite your test pyramid is going to look a lot like the one we had.
 
@@ -45,7 +45,7 @@ True. But once you’ve included tests for every edge-case, bug, and race-condit
 
 Although we had more than 80% coverage in all our unit test suites the reason it looks more like an ice-cream cone than a pyramid was because we added on so many integration and E2E test cases that towards the end some integration suites would take over 60 minutes to complete — that’s 1 hour wasted by a developer waiting to know if their code change broke another feature in the service — and with the suite running on a CI server it’s still going to be difficult to understand the entire scope of the broken tests and narrow down the impacted area to debug the faulty logic.
 
-##The Solution
+## The Solution
 
 We came up with an integration test suite that could be used to test entire API flows within a microservice while co-existing with unit tests, and which would be executed automatically along with the unit test suite. A test would be executed from the service method that the REST controller uses while mocking only the external database and API calls.
 
@@ -61,7 +61,7 @@ As shown above, we only mock anything outside the control of the service i.e. th
 
 Since this strategy allows you to control and assert all the entry and exit points of your service, you have the ability to write test cases to verify the exact behaviour of the relevant API endpoint.
 
-###Naming Conventions
+### Naming Conventions
 
 This is where BDT gets its name. Remember that you are testing a complete flow in the viewpoint of a downstream service. A test case for the previous example which returns the delivery ETA of an order (`GET /order/:orderId/location`) where you also need to simulate the failure of an upstream service would look like the one shown below.
 
@@ -71,7 +71,7 @@ This is where BDT gets its name. Remember that you are testing a complete flow i
 
 Here the name of the test case should represent the expectation of the service that would be consuming that method via an API invocation as per the contract. We also try to make sure that the name clearly identifies the test scope so that a developer would be able to look at a test case and immediately know what is expected.
 
-##The Results
+## The Results
 
 Since these new tests execute along with the existing unit tests, and since the database and external APIs are mocked, we’ve seen around 1500 test cases completing within a couple of minutes — that’s around 95% faster than what our previous integration test suite running on a CI server would have taken while more or less covering the same test cases.
 
