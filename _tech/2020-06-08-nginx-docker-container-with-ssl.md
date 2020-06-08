@@ -6,7 +6,7 @@ title: "How to run nginx with ssl enabled inside docker"
 Lets deploy a nginx server in docker with SSL enabled port. Before we try to work with nginx, first of all lets create a self signed certificate. SSL (Secure Socket Layer ) enable us to communicate with web servers, websites securely. In SSL a certificate is used to verify the authenticity of a website. To enable SSL lets create a self signed certificate for our purpose.
 
 <figure>
-  <img src="{{ base_path }}/images/post6-1.jpeg" alt="nginx">
+  <img src="{{ base_path }}/images/post6-1.png" alt="nginx">
 </figure>
 
 In linux it is easy to create a self signed certificate using openssl. What you have to do is, just run the below commands and provide data for the questions prompt.
