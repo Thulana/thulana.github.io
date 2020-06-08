@@ -1,5 +1,5 @@
 ---
-title: "Nginx With SSL inside docker"
+title: "How to run nginx with ssl enabled inside docker"
 
 ---
 
