@@ -2,18 +2,18 @@
 title: "Fiverr - Gateway to Freelancing"
 ---
 
-Main reason why fiverr has become the gateway freelancing is it's really easy to start working on fiverr, to be honest it didn't took 30 mins for me to create my first account and the gig. 
+Main reason why fiverr has become the gateway for freelancing is, it's really easy to start working on fiverr. To be honest it didn't took 30 mins for me to create my first account and the gig. 
 (Of course it didn't work out :satisfied: ) I heard about Fiverr in 2013, I think. Just to try out I did create a account and post a gig but never followed it up. In 2016 I've heard about local developers,
-who earns big bucks with fiverr. So as anyone would do, I dust it up my old account and try to find ways to bring up my gig. Before start talking about that, let's go over the basics.
+who earn big bucks with fiverr. So as anyone would do, I dust it up my old account and try to find ways to bring up my gig. Before start talking about that, let's go over the basics.
 These are few pointers you should remember when you create a fiverr account.
 
 <figure>
   <img src="{{ base_path }}/images/post7-1.jpg" alt="fiverr">
 </figure>
 
-## start with a account
+## Start with a account
 
-- Does the account name matter - actually I dunno for sure, but I don't think soo. I've seen weired names. It's better if you can brainstorm a cool name.
+- Does the account name matter - actually I dunno for sure, but I don't think soo. I've seen weird names. It's better if you can brainstorm a cool name.
 
 - It's not a bad thing to brag about yourself a bit - talk about yourself a bit in account description and make it a good pitch.
 
@@ -41,7 +41,7 @@ Okay then let's start creating your gig.
 
 - Most of all add few eye catching photos, If you can create them by yourself that's good. 
 
-- Add for tags add the most common tags you found from other gigs.
+- When adding tags, add the most common tags you found from other top gigs.
 
 
 These pointers will help you to create a good gig. But is that enough ? Oooh noo. You gotta do soo much more. Now you have to bring your gig to people.
@@ -66,10 +66,10 @@ Account and the gig is worthy than one order. So don't do my mistake. At first, 
 This doesn't mean that you should request for inconsiderable amount. 
 
 Always start the negotiation little bit higher than your original estimation, settle down little by little. Be cautious when you take a job, school assignments can disable your account too.
-You don't have to say **Sir** for the buyer. Call him by his/her name or use something casual. Some people don't like calling them *friend* and *mate*, so beware.
+You don't have to say **Sir** for the buyer. Call him/her by his/her name or use something casual. Some people don't like calling them *friend* and *mate*, so beware.
 Always be polite and talk like you know stuff even if you don't. LOL 
 
-Don't worry much about cancelling a order that you didnt work on. It will hurt your account but it's better than loosing it. And please beware of indian and pakistan buyers. 
+Don't worry much about cancelling a order that you didnt work on. It will hurt your account but it's better than loosing it. And please beware of indian and pakistan buyers. No offense.
 There are good guys but not all of em. 
 
 ## But don't rely only on fiverr
@@ -79,10 +79,10 @@ There are good guys but not all of em.
 </figure>
 
 Even it's easy to start fiverr, It's very unreliable. You can loose your gig/account any moment. So use fiverr to earn an extra buck and spend it on something reliable. (start a business maybe)
-Lemme tell you why I'm writing this article now. I've got my gig denied yesterday but to TOS violation (school assignments). Issues is 80% of the projects in fiverr
-are school/university projects. What can we do ?
+Lemme tell you why I'm writing this article now. I've got my gig denied yesterday due to TOS violation (school assignments). Issue is 80% of the projects in fiverr
+are school/university projects. What can we do ? If not for them, how can we earn a penny?
 
-Do you know the reason why all the top selling gigs are either Graphic designing/ story telling etc. Because those are not thought in schools or universities. :sweat_smile:	
+Do you know the reason why all the top selling gigs are either Graphic designing/ story telling etc. Because those are not taught in schools or universities. :sweat_smile:	
 
 On that note, keep in mind that you can loose your account any moment and plan for it before hand. If you found some regular buyers, get their contacts. (*don't ask for it in the chat. Use a pastebin link with a expiry*)
 And invest what you earned and start something solid that you will never have to do fiverr again. !!! Cheers
