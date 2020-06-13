@@ -2,11 +2,11 @@
 title: "CI with Travis"
 ---
 
+Travis CI is a hosted CI server which is highly integrated with GitHub. It is really easy to enable Travis for a GitHub project. Hope you all familiar with the Continuous integration. Travis is free for your public repositories. Lets set play with Travis little bit.
+
 <figure>
   <img src="{{ base_path }}/images/post-4-1.jpeg" alt="Travis">
 </figure>
-
-Travis CI is a hosted CI server which is highly integrated with GitHub. It is really easy to enable Travis for a GitHub project. Hope you all familiar with the Continuous integration. Travis is free for your public repositories. Lets set play with Travis little bit.
 
 What you should have first is a public Repo in GitHub. Then Go to [https://travis-ci.org](https://travis-ci.org) and login using GitHub. Then Travis will display all the public repos you have. Then enable Travis for the repository you want. Now all is set. For each and every commit, travis will build the project now.
 
