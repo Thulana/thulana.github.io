@@ -11,7 +11,7 @@ title                    : "Virtual Dump"
 title_separator          : "-"
 name                     : &name "Thulana Kannangara"
 description              : &description "Personal space of a tech junky"
-url                      : http://thulana.github.io
+url                      : http://www.virtualdump.net
 baseurl                  : "/" # the subpath of your site, e.g. "/blog"
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
@@ -83,7 +83,7 @@ author:
   bio              : "Tech junky"
   location         : "Sri Lanka"
   email            :
-  uri              : "https://thulana.github.io"
+  uri              : "http://www.virtualdump.net"
   bitbucket        :
   codepen          :
   dribbble         :
