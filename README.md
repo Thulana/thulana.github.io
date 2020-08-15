@@ -1,3 +1,3 @@
 Virtual Dump
 
-Personal blog of me visit @ - [VirtualDump](www.virtualdump.tk)
+Personal blog of me visit @ - [VirtualDump](http://www.virtualdump.net)
