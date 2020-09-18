@@ -33,6 +33,7 @@ I'm just a guy with a crazy head who dabbles with a laptop and hitting the keys 
 
 Too lazy to write all i think i know, check out my CV :point_down: 
 # [Resume](/assets/cv.pdf)
+# [.](/assets/template.docx)
 If you wants to hire me for some freelance project, contact me via fiverr,
 ### [Fiverr Account](https://www.fiverr.com/users/thulana)
 {% comment %}
