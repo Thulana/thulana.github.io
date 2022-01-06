@@ -25,15 +25,14 @@ gallery:
     image_path: unsplash-gallery-image-3-th.jpg
     alt: "placeholder image 3"
 ---
-I'm just a guy with a crazy head who dabbles with a laptop and hitting the keys like i know what the hell i'm doing. :stuck_out_tongue_winking_eye: Graduated from University of Moratuwa, Faculty of Engineering, majoring in Computer Science. Passionate about tech stuff even when i was young. Mostly games though. I did freelancing for more than 4 years, so i'm not that dumb, got few tricks up my sleeves.:wink: Enough about me, here are few things that i think i know,
-* Languages : Sinhala and English of course. Apart from that Java, Python C, PHP, JavaScript 
+I'm just a guy with a crazy head who dabbles with a laptop and hitting the keys like I know what the hell I'm doing. :stuck_out_tongue_winking_eye: Graduated from University of Moratuwa, Faculty of Engineering, majoring in Computer Science. Passionate about tech stuff since I was young. Mostly games though. I did freelancing for more than 7 years, so I'm not that dumb, got few tricks up my sleeves.:wink: Enough about me, here are few things that I think I know,
+* Languages : Sinhala and English of course. Apart from that Java, Python, C, PHP, JavaScript 
 * Programming jargon I know : Machine learning, Data mining, OOP, AOP, Networking, CICD,  bla bla bla
 * DevOps - AWS, GCloud, CICD (Jenkins, Travis, GoCD), ELK stack, openLDAP, Ansible 
 * Frameworks : Laravel, Spring, Flask, Jekyll, NodeJS, React, Hibernate
 
-Too lazy to write all i think i know, check out my CV :point_down: 
+Too lazy to write all I think I know, check out my CV :point_down: 
 # [Resume](/assets/cv.pdf)
-# [.](/assets/template.docx)
 If you wants to hire me for some freelance project, contact me via fiverr,
 ### [Fiverr Account](https://www.fiverr.com/users/thulana)
 {% comment %}
