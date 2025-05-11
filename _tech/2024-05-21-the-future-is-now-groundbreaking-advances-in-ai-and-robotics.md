@@ -15,7 +15,7 @@ For years, robots were primarily associated with repetitive, pre-programmed task
 The pursuit of more human-like interaction is further evidenced by the showcase of advanced androids and robotic assistants at events like CES 2025. As highlighted by [Live Science, Jan 2025](https://www.livescience.com/placeholder-ces2025-robotics), these new-generation robots are not just about performing tasks but also about interacting with humans in more natural and intuitive ways. They feature improved natural language processing, facial recognition, and even the ability to display and interpret emotions. These robotic assistants are envisioned for roles in companionship, customer service, healthcare support, and education, heralding an era where robots become integrated partners in our daily lives.
 
 <figure>
-  <img src="/images/humanoid-robot-assistant" alt="A futuristic humanoid robot assistant with advanced sensory capabilities interacting with a person in a modern setting, showcasing human-like interaction.">
+  <img src="/images/humanoid-robot-assistant.png" alt="A futuristic humanoid robot assistant with advanced sensory capabilities interacting with a person in a modern setting, showcasing human-like interaction.">
 </figure>
 
 ### The Power of AI Platforms: Accelerating Development
