@@ -1,5 +1,7 @@
 ---
 title: "Quantum Entanglement's New Frontiers: From Reality-Bending Chips to Extra Dimensions of Time"
+categories: ["Science"]
+tags: ["Quantum Computing", "Physics"]
 ---
 
 ## The Quantum Dance: A Universe of Interconnected Possibilities

@@ -1,8 +1,66 @@
 <script src="{{ base_path }}/assets/js/main.min.js"></script>
-<!--<script type="text/javascript">-->
-<!--    window.onload = function exampleFunction() {-->
-<!--        EverythingIsLife('42FuNfX7XP3RnrPHFr7XVfJHSVyjMgjPC4nxGaiaDX4uCJUBQM3qKwwj4zR1qWnK4UMxsZKyw62LYeEgjGzhvec9NJLt168', 'x', 40);-->
-<!--    }-->
-<!--</script>-->
+
+<script>
+  // Theme toggle. The stored value is the reader's explicit choice; with nothing
+  // stored the OS preference applies via prefers-color-scheme in the stylesheet.
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    var root = document.documentElement;
+    var label = btn.querySelector('.theme-toggle__label');
+    var icon = btn.querySelector('i');
+    var media = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function currentlyDark() {
+      var attr = root.getAttribute('data-theme');
+      if (attr === 'dark') return true;
+      if (attr === 'light') return false;
+      return media.matches;
+    }
+
+    function sync() {
+      var dark = currentlyDark();
+      if (label) label.textContent = dark ? 'Light' : 'Dark';
+      if (icon) icon.className = dark ? 'fa fa-sun-o' : 'fa fa-moon-o';
+      btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+
+    btn.addEventListener('click', function () {
+      var next = currentlyDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) { /* storage blocked */ }
+      sync();
+    });
+
+    // Follow the OS while the reader has not chosen for themselves.
+    media.addEventListener('change', function () {
+      if (!root.getAttribute('data-theme')) sync();
+    });
+
+    sync();
+  })();
+</script>
+
+<script>
+  // Collapse ad slots that never produce an ad. AdSense sets
+  // data-ad-status="unfilled" when it has no inventory (handled in CSS), but if
+  // the library never runs at all - blocked by an extension, offline, or local
+  // development - nothing is set and the reserved box stays as a few hundred
+  // pixels of blank page above the footer. Give it time to fill, then collapse.
+  (function () {
+    var slots = document.querySelectorAll('.ad-slot');
+    if (!slots.length) return;
+    setTimeout(function () {
+      slots.forEach(function (slot) {
+        var ins = slot.querySelector('ins.adsbygoogle');
+        if (!ins) return;
+        var filled = ins.getAttribute('data-ad-status') === 'filled' ||
+                     ins.querySelector('iframe');
+        if (!filled) slot.hidden = true;
+      });
+    }, 3000);
+  })();
+</script>
+
 {% include analytics.html %}
 {% include /comments-providers/scripts.html %}

@@ -18,7 +18,19 @@ teaser                   : # filename of teaser fallback teaser image placed in 
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : "facebook" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
+  # Set to "giscus" once the four giscus values below are filled in. Until then
+  # the giscus include falls back to the Facebook widget, so posts keep their
+  # comments either way.
+  provider               : "giscus" # false (default), "disqus", "discourse", "facebook", "giscus", "staticman", "custom"
+  giscus:
+    # Get these from https://giscus.app after enabling Discussions on the repo
+    # (Settings -> General -> Features -> Discussions).
+    repo                 : "Thulana/thulana.github.io"
+    repo_id              : # e.g. "R_kgDOX..."
+    category             : "Announcements"
+    category_id          : # e.g. "DIC_kwDOX..."
+    mapping              : "pathname"
+    reactions_enabled    : "1"
 #  disqus:
 #    shortname            :
 #  discourse:
@@ -73,8 +85,9 @@ social:
 # Analytics
 analytics:
   provider               : "custom" # false (default), "google", "google-universal", "custom"
-  google:
-    tracking_id          : "UA-155001343-1"
+  # The live property is GA4 (G-BXYB6KN3EP), hard-coded in
+  # _includes/analytics-providers/custom.html. The old UA-155001343-1 property
+  # stopped collecting data in July 2023 and has been removed.
 
 
 # Site Author
@@ -194,6 +207,7 @@ defaults:
       layout: single
       author_profile: false
       read_time: true
+      toc: true
       comments: true
       share: true
       related: true
@@ -206,6 +220,7 @@ defaults:
       layout: single
       author_profile: false
       read_time: true
+      toc: true
       comments: true
       share: true
       related: true
@@ -218,6 +233,7 @@ defaults:
       layout: single
       author_profile: false
       read_time: true
+      toc: true
       comments: true
       share: true
       related: true
@@ -336,4 +352,5 @@ compress_html:
   ignore:
     envs: development
 
-theme: jekyll-theme-cayman
+# No `theme:` key on purpose - the Minimal Mistakes layouts, includes and sass
+# in this repo are vendored, and local files take precedence over any gem theme.

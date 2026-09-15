@@ -1,43 +1,61 @@
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <div class="ct-topbar">
   <div class="container">
     <ul class="list-unstyled list-inline ct-topbar__list">
-      <li class="ct-language">Language <i class="fa fa-arrow-down"></i>
-        <ul class="list-unstyled ct-language__dropdown">
-          <li><a href="#googtrans(en|en)" class="lang-en lang-select" data-lang="en"><img src="/images/eng-icon.png" alt="ENGLISH"></a></li>
-          <li><a href="#googtrans(en|si)" class="lang-es lang-select" data-lang="si"><img src="/images/si-icon.png" alt="SINHALA"></a></li>
+      <li class="ct-language">
+        <button type="button" class="ct-language__toggle" aria-expanded="false" aria-controls="ct-language-menu">
+          Language <i class="fa fa-arrow-down" aria-hidden="true"></i>
+        </button>
+        <ul class="list-unstyled ct-language__dropdown" id="ct-language-menu">
+          <li><a href="#googtrans(en|en)" class="lang-select" data-lang="en" lang="en"><img src="/images/eng-icon.png" alt="Read this site in English" width="16" height="9"></a></li>
+          <li><a href="#googtrans(en|si)" class="lang-select" data-lang="si" lang="si"><img src="/images/si-icon.png" alt="Read this site in Sinhala" width="16" height="8"></a></li>
         </ul>
       </li>
     </ul>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark theme" title="Switch theme">
+      <i class="fa fa-moon-o" aria-hidden="true"></i><span class="theme-toggle__label">Dark</span>
+    </button>
   </div>
 </div>
 
-<script type="text/javascript">
+<div id="google_translate_element" hidden></div>
+
+<script>
   function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT}, 'google_translate_element');
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT },
+      'google_translate_element'
+    );
   }
 
-  function triggerHtmlEvent(element, eventName) {
-    var event;
-    if (document.createEvent) {
-      event = document.createEvent('HTMLEvents');
-      event.initEvent(eventName, true, true);
-      element.dispatchEvent(event);
-    } else {
-      event = document.createEventObject();
-      event.eventType = eventName;
-      element.fireEvent('on' + event.eventType, event);
+  (function () {
+    // Keyboard/touch toggle for the dropdown; CSS still handles :hover on pointer devices.
+    var toggle = document.querySelector('.ct-language__toggle');
+    var menu = document.getElementById('ct-language-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function () {
+        var open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        menu.classList.toggle('is-open', !open);
+      });
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.ct-language')) {
+          toggle.setAttribute('aria-expanded', 'false');
+          menu.classList.remove('is-open');
+        }
+      });
     }
-  }
 
-  jQuery('.lang-select').click(function() {
-    var theLang = jQuery(this).attr('data-lang');
-    jQuery('.goog-te-combo').val(theLang);
-
-    //alert(jQuery(this).attr('href'));
-    window.location = jQuery(this).attr('href');
-    location.reload();
-
-  });
+    document.querySelectorAll('.lang-select').forEach(function (link) {
+      link.addEventListener('click', function () {
+        var combo = document.querySelector('.goog-te-combo');
+        if (combo) {
+          combo.value = link.getAttribute('data-lang');
+          combo.dispatchEvent(new Event('change'));
+        }
+        window.location = link.getAttribute('href');
+        location.reload();
+      });
+    });
+  })();
 </script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

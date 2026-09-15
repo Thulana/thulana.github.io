@@ -1,5 +1,7 @@
 ---
 title: " Where i go to download a movie, tv show or a game"
+categories: ["Personal"]
+tags: ["Movies", "TV Shows", "Tools"]
 ---
 
 We all want something to do when we are free. Some used to do productive things like reading a book, workout, 

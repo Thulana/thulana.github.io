@@ -11,8 +11,21 @@
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<meta name="color-scheme" content="light dark">
+
 <script>
   document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+
+  // Apply the saved theme before first paint so the page never flashes the
+  // wrong colours. No stored choice means the OS preference decides.
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    } catch (e) { /* private mode / blocked storage: fall back to the media query */ }
+  })();
 </script>
 
 <!-- For all browsers -->

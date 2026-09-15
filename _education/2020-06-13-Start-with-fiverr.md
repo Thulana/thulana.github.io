@@ -1,5 +1,7 @@
 ---
 title: "Fiverr - Gateway to Freelancing"
+categories: ["Career"]
+tags: ["Freelancing", "Fiverr", "Career"]
 ---
 
 Main reason why fiverr has become the gateway for freelancing is, it's really easy to start working on fiverr. To be honest it didn't took 30 mins for me to create my first account and the gig. 

@@ -5,7 +5,7 @@
 .page__footer {
   @include full();
   @include clearfix;
-  margin-top: 3em;
+  margin-top: 2rem;
   color: mix(#fff, $gray, 25%);
   -webkit-animation: intro 0.3s both;
           animation: intro 0.3s both;

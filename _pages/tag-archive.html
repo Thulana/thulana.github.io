@@ -6,7 +6,11 @@ author_profile: true
 ---
 
 {% include base_path %}
-{% include group-by-array collection=site.posts field="tags" %}
+{% comment %}Posts live in the tech/misc/education collections, not _posts,
+so site.posts is empty and site.tags is never populated.{% endcomment %}
+{% assign all_posts = site.tech | concat: site.misc | concat: site.education %}
+{% assign all_posts = all_posts | sort: 'date' | reverse %}
+{% include group-by-array collection=all_posts field="tags" %}
 
 {% for tag in group_names %}
   {% assign posts = group_items[forloop.index0] %}

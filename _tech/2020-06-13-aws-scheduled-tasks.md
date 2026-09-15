@@ -1,6 +1,7 @@
 ---
 title: "Reduce your cloud infrastructure costs by using Scheduled Tasks on AWS by Damian Perera"
-
+categories: ["Engineering"]
+tags: ["AWS", "Cloud", "Cost Optimization", "DevOps"]
 ---
 
 ECS allows you to deploy and run containers on a fully-managed orchestration service (similar to Kubernetes). While the most common use case of ECS (as far as I know) is to continuously run services on containers, there could be some architectural designs that require some services to only run periodically.

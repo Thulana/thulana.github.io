@@ -1,5 +1,7 @@
 ---
 title: "How to create your own blog with zero cost - Story of virtualdump"
+categories: ["Engineering"]
+tags: ["Jekyll", "GitHub Pages", "Blogging"]
 ---
 
 Who won't like your own blog in your own domain. But to do all this, you needs to spent few bucks. If not you can go with a popular blogging site like **Medium**.  But every techie would love their own space. So, here is the story of  [Virtual Dump](http://virtualdump.tk/)
