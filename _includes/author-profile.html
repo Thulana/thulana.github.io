@@ -12,6 +12,7 @@
     {% else %}
     	<img src="{{ author.avatar | prepend: "/images/" | prepend: base_path }}" class="author__avatar" alt="{{ author.name }}">
     {% endif %}
+    <canvas class="author-portrait" aria-hidden="true"></canvas>
   </div>
 
   <div class="author__content">

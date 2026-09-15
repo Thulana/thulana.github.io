@@ -112,6 +112,32 @@ few hundred bytes the page actually loads; it pulls the bundle in by dynamic
 import once the page is idle, and readers who have asked for reduced motion
 never download it at all. With the loader the score is back to 96.
 
+## The author portrait
+
+The photo on /about is overlaid by a canvas that gives it depth: nearer parts
+of the face shift further than the edges as the pointer moves, so it appears
+to turn and look toward it. `assets/js/author-portrait.js`, one textured quad
+and a fragment shader.
+
+Raw WebGL rather than the bundled three.js — a single quad has no use for a
+scene graph, and /about has no other reason to pull 136 KB.
+
+**There is no depth map asset.** The shader synthesises one: a hemisphere
+profile centred slightly above the middle of the frame, which is roughly
+where the face sits in a head-and-shoulders crop. It is an approximation that
+works because the subject is dome-shaped and the displacement is small. If a
+real depth map is ever produced, drop it in `images/` and point the canvas at
+it with `data-depth="..."` — the shader uses it instead, with no code change.
+
+`MAX_SHIFT` at the top of the file is how far the nearest point travels. It
+is the dial to turn if the effect reads as too weak or too rubbery.
+
+The `<img>` stays underneath, so no WebGL, a failed decode or reduced motion
+all leave the ordinary photo in place. The script is loaded only where the
+sidebar actually renders — which is not the same as where `author_profile` is
+true, since `_config.yml` defaults that to true for every page while the
+splash layout renders no sidebar at all.
+
 ## The site background
 
 Every page also carries a fixed canvas behind its content, drawn by
