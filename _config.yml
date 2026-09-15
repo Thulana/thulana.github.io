@@ -81,8 +81,8 @@ analytics:
 author:
   name             : *name
   avatar           : "thulana.jpg"
-  bio              : "Tech junky"
-  location         : "Sri Lanka"
+  bio              : "Senior Software Engineer. Tech junky."
+  location         : "Winnipeg, Canada"
   email            :
   uri              : "https://www.virtualdump.net"
   bitbucket        :
@@ -96,7 +96,7 @@ author:
   keybase          :
   instagram        : "thulanak"
   lastfm           :
-  linkedin         :
+  linkedin         : "thulana-kannangara"
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
