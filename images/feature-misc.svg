@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="A scattered constellation of stars with one bright cluster and a dashed orbit">
+  <title>Off-topic constellation</title>
+  <style>
+    .bg-a { stop-color: #1b2a33; }
+    .bg-b { stop-color: #0f1418; }
+    .edge { stroke: #2f6f8f; stroke-width: 2.4; opacity: .85; }
+    .orbit { stroke: #3b4a54; stroke-width: 1.4; opacity: .55; }
+    .node { fill: #7cc3e0; }
+    .node-dim { fill: #55707f; }
+    .dust { fill: #55707f; opacity: .55; }
+    .glow { fill: #007cae; opacity: .16; }
+    @media (prefers-color-scheme: light) {
+      .bg-a { stop-color: #33566b; }
+      .bg-b { stop-color: #1d2f3c; }
+      .edge { stroke: #8fd0e8; opacity: .9; }
+      .orbit { stroke: #7d97a6; opacity: .5; }
+      .node { fill: #d8f0fa; }
+      .node-dim { fill: #9fc0d0; }
+      .dust { fill: #9fc0d0; opacity: .6; }
+      .glow { fill: #6fb7d6; opacity: .18; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="misc-sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" class="bg-a"/>
+      <stop offset="1" class="bg-b"/>
+    </linearGradient>
+    <radialGradient id="misc-halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" class="glow"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#misc-sky)"/>
+  <ellipse cx="470" cy="230" rx="340" ry="250" fill="url(#misc-halo)"/>
+
+  <ellipse class="orbit" cx="470" cy="240" rx="250" ry="120" fill="none"
+           stroke-dasharray="6 12" transform="rotate(-14 470 240)"/>
+
+  <!-- the bright cluster -->
+  <g class="edge" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M400 190 L540 250 L430 320 Z"/>
+  </g>
+
+  <g class="dust">
+    <circle cx="150" cy="120" r="3"/><circle cx="235" cy="330" r="2.5"/>
+    <circle cx="310" cy="95"  r="2"/><circle cx="640" cy="130" r="3"/>
+    <circle cx="700" cy="330" r="2.5"/><circle cx="180" cy="420" r="2"/>
+    <circle cx="590" cy="410" r="3"/><circle cx="90"  cy="260" r="2.5"/>
+    <circle cx="730" cy="215" r="2"/><circle cx="350" cy="430" r="2.5"/>
+  </g>
+
+  <g class="node-dim">
+    <circle cx="255" cy="205" r="5"/>
+    <circle cx="660" cy="285" r="5"/>
+    <circle cx="470" cy="400" r="5"/>
+  </g>
+
+  <g class="node">
+    <circle cx="400" cy="190" r="10"/>
+    <circle cx="540" cy="250" r="8"/>
+    <circle cx="430" cy="320" r="8"/>
+  </g>
+</svg>

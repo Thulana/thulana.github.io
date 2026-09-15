@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="A winding route between two points with a direct shortcut arcing over it">
+  <title>The shortcut</title>
+  <style>
+    .bg-a { stop-color: #1b2a33; }
+    .bg-b { stop-color: #0f1418; }
+    .edge { stroke: #2f6f8f; stroke-width: 3; opacity: .85; }
+    .edge-dim { stroke: #3b4a54; stroke-width: 1.6; opacity: .5; }
+    .node { fill: #7cc3e0; }
+    .node-dim { fill: #55707f; }
+    .glow { fill: #007cae; opacity: .16; }
+    @media (prefers-color-scheme: light) {
+      .bg-a { stop-color: #33566b; }
+      .bg-b { stop-color: #1d2f3c; }
+      .edge { stroke: #8fd0e8; opacity: .9; }
+      .edge-dim { stroke: #7d97a6; opacity: .45; }
+      .node { fill: #d8f0fa; }
+      .node-dim { fill: #9fc0d0; }
+      .glow { fill: #6fb7d6; opacity: .18; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="tips-sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" class="bg-a"/>
+      <stop offset="1" class="bg-b"/>
+    </linearGradient>
+    <radialGradient id="tips-halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" class="glow"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#tips-sky)"/>
+  <ellipse cx="400" cy="180" rx="360" ry="260" fill="url(#tips-halo)"/>
+
+  <!-- the long way round -->
+  <path class="edge-dim" fill="none" stroke-dasharray="7 9"
+        d="M110 390 L215 320 L330 355 L445 275 L560 305 L690 205"/>
+
+  <!-- the shortcut -->
+  <path class="edge" fill="none" stroke-linecap="round"
+        d="M110 390 Q 400 95 690 205"/>
+
+  <g class="node-dim">
+    <circle cx="215" cy="320" r="5"/>
+    <circle cx="330" cy="355" r="5"/>
+    <circle cx="445" cy="275" r="5"/>
+    <circle cx="560" cy="305" r="5"/>
+  </g>
+
+  <g class="node">
+    <circle cx="110" cy="390" r="11"/>
+    <circle cx="690" cy="205" r="11"/>
+  </g>
+</svg>

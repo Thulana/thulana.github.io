@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Three stacked service layers with a request path traced down through them">
+  <title>Layered services</title>
+  <style>
+    .bg-a { stop-color: #1b2a33; }
+    .bg-b { stop-color: #0f1418; }
+    .panel { fill: #16222a; stroke: #3b4a54; stroke-width: 1.4; opacity: .9; }
+    .edge { stroke: #2f6f8f; stroke-width: 3; opacity: .9; }
+    .edge-dim { stroke: #3b4a54; stroke-width: 1.4; opacity: .5; }
+    .node { fill: #7cc3e0; }
+    .node-dim { fill: #55707f; }
+    .glow { fill: #007cae; opacity: .16; }
+    @media (prefers-color-scheme: light) {
+      .bg-a { stop-color: #33566b; }
+      .bg-b { stop-color: #1d2f3c; }
+      .panel { fill: #2a4356; stroke: #7d97a6; }
+      .edge { stroke: #8fd0e8; }
+      .edge-dim { stroke: #7d97a6; opacity: .45; }
+      .node { fill: #d8f0fa; }
+      .node-dim { fill: #9fc0d0; }
+      .glow { fill: #6fb7d6; opacity: .18; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="tech-sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" class="bg-a"/>
+      <stop offset="1" class="bg-b"/>
+    </linearGradient>
+    <radialGradient id="tech-halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" class="glow"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#tech-sky)"/>
+  <ellipse cx="400" cy="250" rx="380" ry="300" fill="url(#tech-halo)"/>
+
+  <rect class="panel" x="120" y="80"  width="560" height="90" rx="12"/>
+  <rect class="panel" x="120" y="205" width="560" height="90" rx="12"/>
+  <rect class="panel" x="120" y="330" width="560" height="90" rx="12"/>
+
+  <!-- inter-layer links -->
+  <g class="edge-dim" fill="none">
+    <path d="M250 170 L250 205"/>
+    <path d="M400 170 L400 205"/>
+    <path d="M550 295 L550 330"/>
+    <path d="M250 295 L250 330"/>
+  </g>
+
+  <!-- the request path -->
+  <path class="edge" fill="none" stroke-linecap="round" stroke-linejoin="round"
+        d="M550 125 L550 170 L400 205 L400 250 L400 295 L250 330 L250 375"/>
+
+  <g class="node-dim">
+    <circle cx="250" cy="125" r="6"/>
+    <circle cx="400" cy="125" r="6"/>
+    <circle cx="250" cy="250" r="6"/>
+    <circle cx="550" cy="250" r="6"/>
+    <circle cx="400" cy="375" r="6"/>
+    <circle cx="550" cy="375" r="6"/>
+  </g>
+
+  <g class="node">
+    <circle cx="550" cy="125" r="9"/>
+    <circle cx="400" cy="250" r="9"/>
+    <circle cx="250" cy="375" r="9"/>
+  </g>
+</svg>
