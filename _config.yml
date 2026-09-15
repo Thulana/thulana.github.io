@@ -18,17 +18,18 @@ teaser                   : # filename of teaser fallback teaser image placed in 
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  # Set to "giscus" once the four giscus values below are filled in. Until then
-  # the giscus include falls back to the Facebook widget, so posts keep their
-  # comments either way.
+  # Comments are GitHub Discussions, rendered by giscus. Discussions is enabled
+  # on the repository and the four values below are filled in; the remaining
+  # requirement is the giscus GitHub App, which has to be installed on the
+  # repository from https://github.com/apps/giscus before the widget will mount.
   provider               : "giscus" # false (default), "disqus", "discourse", "facebook", "giscus", "staticman", "custom"
   giscus:
-    # Get these from https://giscus.app after enabling Discussions on the repo
-    # (Settings -> General -> Features -> Discussions).
+    # From the GitHub API for Thulana/thulana.github.io. Regenerate at
+    # https://giscus.app if the repository is ever renamed or transferred.
     repo                 : "Thulana/thulana.github.io"
-    repo_id              : # e.g. "R_kgDOX..."
+    repo_id              : "R_kgDODa685Q"
     category             : "Announcements"
-    category_id          : # e.g. "DIC_kwDOX..."
+    category_id          : "DIC_kwDODa685c4DFrxn"
     mapping              : "pathname"
     reactions_enabled    : "1"
 #  disqus:

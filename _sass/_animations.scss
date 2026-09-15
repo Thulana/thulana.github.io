@@ -19,3 +19,38 @@
     opacity: 1;
   }
 }
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+/*
+   Readers who ask their operating system to minimise animation get the site
+   without it. The universal selector is deliberately blunt: it covers the
+   theme's `intro` fades, every $global-transition, and the vendor animations
+   in magnific-popup without having to chase each one down individually.
+
+   Durations collapse to a near-zero value rather than `none` so that
+   animationend and transitionend still fire — anything waiting on those
+   callbacks continues to run instead of hanging.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    -webkit-animation-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+            animation-iteration-count: 1 !important;
+    -webkit-transition-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Smooth scroll is disabled in JS for these readers, so in-page links jump
+     natively. Keep the landing spot clear of the sticky masthead, which is what
+     smoothScroll's offset was doing. */
+  :target {
+    scroll-margin-top: 2rem;
+  }
+}
