@@ -1,0 +1,41 @@
+/* ==========================================================================
+   SITE BACKGROUND CANVAS
+   ========================================================================== */
+
+/*
+   A fixed canvas behind every page. The colour that was on <body> moves to
+   <html> so the canvas has something to sit in front of: html paints the
+   surface colour, the canvas composites over it at z-index -1, and all page
+   content stacks above.
+
+   That ordering is what makes the fallback free. If WebGL is missing, the
+   context is lost, or the reader has asked for reduced motion, the canvas
+   simply never becomes visible and the html surface colour is the page
+   background exactly as before.
+
+   Imported after "theme" so this background-color declaration wins over the
+   `html, body` rule there.
+*/
+
+body {
+  background-color: transparent;
+}
+
+.site-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  -webkit-transition: opacity 1s ease-in-out;
+          transition: opacity 1s ease-in-out;
+
+  &.is-live {
+    opacity: 1;
+  }
+}

@@ -36,6 +36,7 @@
 @import "hero";
 
 @import "theme"; // tokens + dark mode; must come after every partial it repaints
+@import "site-bg"; // after theme: moves the surface colour off <body>
 
 @import "vendor/font-awesome/font-awesome";
 @import "vendor/magnific-popup/magnific-popup";
