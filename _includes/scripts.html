@@ -1,5 +1,14 @@
 <script src="{{ base_path }}/assets/js/main.min.js"></script>
 
+{% if page.header.overlay_color or page.header.overlay_image %}
+  {% comment %}
+    Hero background shader. A module, so it defers by default and never
+    blocks first paint, and so it stays clear of the ES5-only uglify
+    pipeline that builds main.min.js.
+  {% endcomment %}
+  <script type="module" src="{{ base_path }}/assets/js/hero-shader.js"></script>
+{% endif %}
+
 <script>
   // Theme toggle. The stored value is the reader's explicit choice; with nothing
   // stored the OS preference applies via prefers-color-scheme in the stylesheet.
