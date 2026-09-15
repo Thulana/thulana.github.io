@@ -21,8 +21,8 @@ is Markdown; there is no application code and no test suite.
 
 ## Non-negotiable constraints
 
-**`master` is production.** Merging deploys straight to the live site. Always
-work on a branch and open a PR; never commit to `master` directly.
+**`main` is production.** Merging deploys straight to the live site. Always
+work on a branch and open a PR; never commit to `main` directly.
 
 **This is someone's personal writing.** Do not rewrite, restructure, or
 "improve" the prose of an existing post unless explicitly asked. Fixing a broken
@@ -84,4 +84,4 @@ an SSH alias rather than a literal `github.com` URL.
 - [ ] `bundle exec jekyll build` exits clean
 - [ ] You loaded the affected page locally and looked at it
 - [ ] `git status` shows nothing generated staged
-- [ ] Changes are on a branch, not `master`
+- [ ] Changes are on a branch, not `main`

@@ -1,13 +1,13 @@
 # Contributing
 
 This is a personal blog, so the process is deliberately light. The rules that
-matter are the ones that keep `master` publishable, because
-[merging to `master` publishes the site](deployment.md).
+matter are the ones that keep `main` publishable, because
+[merging to `main` publishes the site](deployment.md).
 
 ## Workflow
 
 ```bash
-git checkout master && git pull
+git checkout main && git pull
 git checkout -b <type>/<short-description>
 # ... work ...
 bundle exec jekyll serve --config _config.yml,_config.dev.yml   # preview
@@ -19,7 +19,7 @@ gh pr create --fill
 Branch prefixes in use: `story/` for new content, `docs/` for documentation,
 `feat/` and `fix/` for site changes.
 
-Never commit directly to `master` — it deploys immediately, with no review step
+Never commit directly to `main` — it deploys immediately, with no review step
 between the push and the live site.
 
 ## Commits
@@ -38,7 +38,7 @@ generated — see [deployment](deployment.md#the-cv).
 
 ## Pull requests
 
-A PR against `master` is worth opening even working solo: it gives the Pages
+A PR against `main` is worth opening even working solo: it gives the Pages
 build something to check before the change is live, and it leaves a record of
 why a change was made. Say what changed and why; link the rendered page if the
 change is visual.
