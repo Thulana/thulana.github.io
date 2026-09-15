@@ -59,8 +59,8 @@
 .pagination {
   @include full();
   @include clearfix();
-  margin-top: 1em;
-  padding-top: 1em;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
 
   ul {
     margin: 0;
@@ -162,8 +162,8 @@
 .page__meta + .pagination,
 .page__share + .pagination,
 .page__comments + .pagination {
-  margin-top: 2em;
-  padding-top: 2em;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
   border-top: 1px solid $border-color;
 }
 

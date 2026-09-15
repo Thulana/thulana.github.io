@@ -196,8 +196,8 @@
    ========================================================================== */
 
 .page__share {
-  margin-top: 2em;
-  padding-top: 1em;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
   border-top: 1px solid $border-color;
 
   @include breakpoint(max-width $small) {
@@ -286,9 +286,9 @@
 }
 
 .page__comments-title {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   margin-bottom: 10px;
-  padding-top: 2rem;
+  padding-top: 1rem;
   font-size: $type-size-6;
   border-top: 1px solid $border-color;
   text-transform: uppercase;

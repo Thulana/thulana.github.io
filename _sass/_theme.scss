@@ -293,3 +293,32 @@ blockquote {
   table { display: block; width: 100%; overflow-x: auto; }
   pre { overflow-x: auto; }
 }
+
+
+/* --------------------------------------------------------------------------
+   Ad slots
+
+   AdSense reserves space before it knows whether it has an ad to serve, and
+   marks the <ins> data-ad-status="unfilled" when it does not. Left alone that
+   is a few hundred pixels of blank page above the footer - and every slot is
+   permanently unfilled in local development, where the request 403s.
+   Collapsing unfilled slots removes the gap in both cases.
+   -------------------------------------------------------------------------- */
+
+.ad-slot {
+  margin: 1rem 0;
+  text-align: center;
+
+  &--sidebar { text-align: left; }
+
+  /* Collapse the wrapper (and its margins) once a slot reports no ad.
+     A slot that never reports at all is hidden from scripts.html instead. */
+  &:has(ins.adsbygoogle[data-ad-status="unfilled"]),
+  &[hidden] {
+    display: none;
+  }
+}
+
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
+}

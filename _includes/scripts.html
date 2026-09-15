@@ -41,5 +41,26 @@
   })();
 </script>
 
+<script>
+  // Collapse ad slots that never produce an ad. AdSense sets
+  // data-ad-status="unfilled" when it has no inventory (handled in CSS), but if
+  // the library never runs at all - blocked by an extension, offline, or local
+  // development - nothing is set and the reserved box stays as a few hundred
+  // pixels of blank page above the footer. Give it time to fill, then collapse.
+  (function () {
+    var slots = document.querySelectorAll('.ad-slot');
+    if (!slots.length) return;
+    setTimeout(function () {
+      slots.forEach(function (slot) {
+        var ins = slot.querySelector('ins.adsbygoogle');
+        if (!ins) return;
+        var filled = ins.getAttribute('data-ad-status') === 'filled' ||
+                     ins.querySelector('iframe');
+        if (!filled) slot.hidden = true;
+      });
+    }, 3000);
+  })();
+</script>
+
 {% include analytics.html %}
 {% include /comments-providers/scripts.html %}
