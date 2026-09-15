@@ -13,6 +13,7 @@ name                     : &name "Thulana Kannangara"
 description              : &description "Personal space of a tech junky"
 url                      : https://www.virtualdump.net
 baseurl                  : "/" # the subpath of your site, e.g. "/blog"
+repository               : "Thulana/thulana.github.io" # needed by github-pages gem for local builds
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -135,7 +136,11 @@ exclude:
   - package.json
   - Rakefile
   - README
+  - README.md
   - tmp
+  - docs
+  - AGENTS.md
+  - Gemfile.lock
 keep_files:
   - .git
   - .svn
@@ -279,7 +284,7 @@ timezone: America/New_York # http://en.wikipedia.org/wiki/List_of_tz_database_ti
 
 
 # Plugins
-gems:
+plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
