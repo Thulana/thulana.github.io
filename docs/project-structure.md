@@ -114,29 +114,41 @@ never download it at all. With the loader the score is back to 96.
 
 ## The author portrait
 
-The photo on /about is overlaid by a canvas that gives it depth: nearer parts
-of the face shift further than the edges as the pointer moves, so it appears
-to turn and look toward it. `assets/js/author-portrait.js`, one textured quad
-and a fragment shader.
+The photo on /about turns to look at the pointer, wherever it is on the page.
+`assets/js/author-portrait.js` — one quad and a fragment shader, raw WebGL,
+because a single quad has no use for a scene graph and /about has no other
+reason to pull the 136 KB three.js bundle.
 
-Raw WebGL rather than the bundled three.js — a single quad has no use for a
-scene graph, and /about has no other reason to pull 136 KB.
+Two things make it read as a head rather than as a picture being dragged
+around, and both matter:
 
-**There is no depth map asset.** The shader synthesises one: a hemisphere
-profile centred slightly above the middle of the frame, which is roughly
-where the face sits in a head-and-shoulders crop. It is an approximation that
-works because the subject is dome-shaped and the displacement is small. If a
-real depth map is ever produced, drop it in `images/` and point the canvas at
-it with `data-depth="..."` — the shader uses it instead, with no code change.
+**The plane is genuinely rotated in 3D.** For every fragment the shader casts
+a ray, intersects it with a plane rotated by the current yaw and pitch, and
+samples the photo at the intersection. That is a real perspective warp: the
+far edge compresses and the near edge spreads. An earlier version displaced
+UVs by a synthesised depth value instead, which slides pixels around and
+reads as rubber — if this ever needs changing, do not go back to that.
 
-`MAX_SHIFT` at the top of the file is how far the nearest point travels. It
-is the dial to turn if the effect reads as too weak or too rubbery.
+**The eyes move separately.** A head that rotates without its gaze changing
+still looks wrong, so each eye region gets a small extra shift toward the
+pointer on top of the rotation. `EYE_LEFT` and `EYE_RIGHT` are measured off
+`images/thulana.jpg` by eye, in texture coordinates, and are the one thing
+here tied to that particular photo — replace the image and they need
+re-checking or the gaze lands on a cheekbone.
+
+`EYE_SHIFT` should stay a small fraction of `EYE_RADIUS`, around a fifth. Push
+it higher and the eyelid smears instead of the iris moving.
+
+The pointer is normalised against the viewport rather than the avatar, so the
+head tracks across the whole page and only recentres when the pointer leaves
+the window. `ZOOM` crops in slightly so that rotation reveals real pixels
+rather than the clamped edge of the texture.
 
 The `<img>` stays underneath, so no WebGL, a failed decode or reduced motion
-all leave the ordinary photo in place. The script is loaded only where the
-sidebar actually renders — which is not the same as where `author_profile` is
-true, since `_config.yml` defaults that to true for every page while the
-splash layout renders no sidebar at all.
+all leave the ordinary photo in place. The script loads only where the sidebar
+actually renders — which is not the same as where `author_profile` is true,
+since `_config.yml` defaults that to true for every page while the splash
+layout renders no sidebar at all.
 
 ## The site background
 

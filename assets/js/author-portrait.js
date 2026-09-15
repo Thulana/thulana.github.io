@@ -1,38 +1,50 @@
 /* ==========================================================================
    Author portrait
 
-   The photo on /about, given depth: nearer parts of the face shift further
-   than the edges as the pointer moves, so the portrait appears to turn and
-   look toward it. One textured quad and a fragment shader — cheap enough
-   that it runs at full frame rate on a 110px avatar.
+   The photo on /about turns to look at the pointer, wherever it is on the
+   page. Two things make that read as a head rather than as a picture being
+   dragged around:
 
-   Raw WebGL rather than the bundled three.js: this is a single quad with no
-   scene graph, and /about has no other reason to pull 136 KB.
+   1. The plane is genuinely rotated in 3D. For every fragment the shader
+      casts a ray, intersects it with a plane rotated by the current yaw and
+      pitch, and samples the photo at the intersection. That is a real
+      perspective warp — the far edge compresses and the near edge spreads,
+      which is what a turning head does. Displacing UVs by a depth value, as
+      the previous version did, cannot produce that; it slides pixels around
+      and reads as rubber.
 
-   About the depth. There is no depth map asset here, so the shader
-   synthesises one: a hemisphere profile centred slightly above the middle of
-   the frame, which is where the face sits in a head-and-shoulders crop. It
-   is an approximation, not a measurement, and it works because the subject is
-   roughly dome-shaped and the displacement is small. If a real depth map is
-   ever generated — Depth Anything, MiDaS, or by hand — drop it next to the
-   photo and point the canvas at it with `data-depth="/images/thulana-depth.jpg"`;
-   the shader will use it instead, no code change needed.
+   2. The eyes move separately. A head that rotates without its gaze changing
+      still looks wrong, so the two eye regions get a small extra shift toward
+      the pointer on top of the rotation.
 
-   The <img> stays underneath and the canvas only fades in once it has drawn,
-   so no WebGL, a failed decode or reduced motion all leave the ordinary photo.
+   Raw WebGL rather than the bundled three.js: one quad, no scene graph, and
+   /about has no other reason to pull 136 KB.
+
+   EYE_LEFT and EYE_RIGHT are measured off images/thulana.jpg by eye, in
+   texture coordinates. They are the one thing here tied to this particular
+   photo — replace the image and they need re-checking, or the gaze lands on
+   a cheekbone.
+
+   The <img> stays underneath, so no WebGL, a failed decode or reduced motion
+   all leave the ordinary photo in place.
    ========================================================================== */
 
 import { watchRuntime, mountEffect } from './lib/effect-runtime.js';
 
-const MAX_SHIFT = 0.075;   // in UV units, at the nearest point of the dome
-const EASE = 0.09;         // how quickly it follows the pointer
-const RETURN_RADIUS = 2.6; // pointer distance, in avatar widths, before it recentres
+const MAX_YAW = 0.30;      // radians, about 17 degrees at the edge of the viewport
+const MAX_PITCH = 0.20;
+const EASE = 0.085;        // how quickly the head follows
+const EYE_LEFT = [0.343, 0.437];   // texture coords, measured off this photo
+const EYE_RIGHT = [0.575, 0.437];
+const EYE_RADIUS = 0.052;   // covers the eye; the shift stays a small fraction of it
+const EYE_SHIFT = 0.010;    // ~20% of the radius: enough to read as gaze,
+                            // gentle enough not to smear the eyelid
 
 const VERT = `
 attribute vec2 a_pos;
-varying vec2 v_uv;
+varying vec2 v_screen;
 void main() {
-  v_uv = vec2(a_pos.x * 0.5 + 0.5, 0.5 - a_pos.y * 0.5);
+  v_screen = a_pos;
   gl_Position = vec4(a_pos, 0.0, 1.0);
 }
 `;
@@ -41,39 +53,56 @@ const FRAG = `
 precision mediump float;
 
 uniform sampler2D u_photo;
-uniform sampler2D u_depthMap;
-uniform float u_useDepthMap;
-uniform vec2  u_offset;
+uniform vec2  u_angles;   // yaw, pitch in radians
+uniform vec2  u_gaze;     // direction to the pointer, -1..1, y down
 uniform float u_time;
 
-varying vec2 v_uv;
+varying vec2 v_screen;
 
-/* Hemisphere centred a little above the middle: in a head-and-shoulders crop
-   that is roughly where the face is, and the sqrt gives a rounded falloff
-   rather than a cone. */
-float domeDepth(vec2 uv) {
-  vec2 d = (uv - vec2(0.5, 0.44)) / vec2(0.46, 0.52);
-  return sqrt(clamp(1.0 - dot(d, d), 0.0, 1.0));
+const float FOCAL = 2.6;   // larger is a longer lens: less perspective distortion
+const float DIST  = 2.6;
+const float ZOOM  = 1.16;  // crop in slightly so rotation reveals real pixels,
+                           // not the clamped edge of the texture
+
+mat3 rotY(float a) { float c = cos(a), s = sin(a); return mat3(c, 0.0, -s, 0.0, 1.0, 0.0, s, 0.0, c); }
+mat3 rotX(float a) { float c = cos(a), s = sin(a); return mat3(1.0, 0.0, 0.0, 0.0, c, s, 0.0, -s, c); }
+
+/* Extra movement local to one eye, so the gaze shifts as well as the head. */
+vec2 eyeShift(vec2 uv, vec2 eye, vec2 dir) {
+  float w = smoothstep(${EYE_RADIUS}, 0.0, distance(uv, eye));
+  return dir * ${EYE_SHIFT} * w;
 }
 
 void main() {
-  float depth = mix(domeDepth(v_uv), texture2D(u_depthMap, v_uv).r, u_useDepthMap);
+  /* Cast a ray per fragment and intersect the rotated plane. */
+  vec3 dir = vec3(v_screen, -FOCAL);
+  mat3 R = rotY(u_angles.x) * rotX(u_angles.y);
+  vec3 normal = R * vec3(0.0, 0.0, 1.0);
+  vec3 centre = vec3(0.0, 0.0, -DIST);
 
-  /* Breathe very slightly, so it is not completely inert before the pointer
-     has been anywhere near it. */
-  float idle = sin(u_time * 0.6) * 0.0025;
+  float denom = dot(dir, normal);
+  if (abs(denom) < 0.0001) discard;
+  vec3 hit = dir * (dot(centre, normal) / denom);
 
-  vec2 uv = v_uv - (u_offset + vec2(idle, idle * 0.4)) * depth;
-  uv = clamp(uv, 0.001, 0.999);
+  vec2 plane = vec2(dot(hit - centre, R * vec3(1.0, 0.0, 0.0)),
+                    dot(hit - centre, R * vec3(0.0, 1.0, 0.0)));
 
-  vec4 photo = texture2D(u_photo, uv);
+  float scale = (0.5 * FOCAL / DIST) / ZOOM;
+  vec2 uv = vec2(0.5 + plane.x * scale, 0.5 - plane.y * scale);
 
-  /* A touch of shading that follows the same direction as the parallax, which
-     is what stops it reading as a flat picture sliding around. */
-  float lift = 1.0 + dot(normalize(u_offset + vec2(0.0001)), (v_uv - 0.5)) * length(u_offset) * 6.0;
+  /* Breathe a little so it is never completely inert. */
+  uv.y += sin(u_time * 0.55) * 0.0016;
 
-  float mask = smoothstep(0.5, 0.487, distance(v_uv, vec2(0.5)));
-  gl_FragColor = vec4(photo.rgb * clamp(lift, 0.88, 1.12), photo.a * mask);
+  uv -= eyeShift(uv, vec2(${EYE_LEFT[0]}, ${EYE_LEFT[1]}), u_gaze);
+  uv -= eyeShift(uv, vec2(${EYE_RIGHT[0]}, ${EYE_RIGHT[1]}), u_gaze);
+
+  vec4 photo = texture2D(u_photo, clamp(uv, 0.002, 0.998));
+
+  /* The side turning away loses a little light, which helps it read as solid. */
+  float shade = clamp(1.0 - u_angles.x * v_screen.x * 0.30 + u_angles.y * v_screen.y * 0.16, 0.86, 1.14);
+
+  float mask = smoothstep(1.0, 0.972, length(v_screen));
+  gl_FragColor = vec4(photo.rgb * shade, photo.a * mask);
 }
 `;
 
@@ -99,16 +128,6 @@ function makeTexture(gl, image) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
   return tex;
-}
-
-function loadImage(src) {
-  return new Promise((res, rej) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => res(img);
-    img.onerror = rej;
-    img.src = src;
-  });
 }
 
 function begin(canvas) {
@@ -161,7 +180,7 @@ function begin(canvas) {
         image.addEventListener('error', rej, { once: true });
       });
 
-  ready.then(async photo => {
+  ready.then(photo => {
     if (disposed) return;
 
     const program = gl.createProgram();
@@ -186,56 +205,52 @@ function begin(canvas) {
     gl.bindTexture(gl.TEXTURE_2D, photoTex);
     gl.uniform1i(gl.getUniformLocation(program, 'u_photo'), 0);
 
-    /* Optional real depth map, if one is ever produced. */
-    let depthTex = photoTex;
-    let useDepthMap = 0;
-    const depthSrc = canvas.dataset.depth;
-    if (depthSrc) {
-      try {
-        depthTex = makeTexture(gl, await loadImage(depthSrc));
-        useDepthMap = 1;
-      } catch { /* fall back to the synthesised dome */ }
-    }
-    gl.activeTexture(gl.TEXTURE1);
-    gl.bindTexture(gl.TEXTURE_2D, depthTex);
-    gl.uniform1i(gl.getUniformLocation(program, 'u_depthMap'), 1);
-    gl.uniform1f(gl.getUniformLocation(program, 'u_useDepthMap'), useDepthMap);
-
-    const uOffset = gl.getUniformLocation(program, 'u_offset');
+    const uAngles = gl.getUniformLocation(program, 'u_angles');
+    const uGaze = gl.getUniformLocation(program, 'u_gaze');
     const uTime = gl.getUniformLocation(program, 'u_time');
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
-    let wantX = 0, wantY = 0, curX = 0, curY = 0;
+    let wantYaw = 0, wantPitch = 0, yaw = 0, pitch = 0;
+    let wantGazeX = 0, wantGazeY = 0, gazeX = 0, gazeY = 0;
 
     const onMove = event => {
       const box = canvas.getBoundingClientRect();
       if (!box.width) return;
       const cx = box.left + box.width / 2;
       const cy = box.top + box.height / 2;
-      /* Distance in avatar-widths, so the portrait tracks the pointer across
-         the surrounding area and recentres once it is far away. */
-      const dx = (event.clientX - cx) / box.width;
-      const dy = (event.clientY - cy) / box.height;
-      const falloff = 1 - Math.min(1, Math.hypot(dx, dy) / RETURN_RADIUS);
-      const scale = MAX_SHIFT * falloff;
-      wantX = Math.max(-1, Math.min(1, dx)) * scale;
-      wantY = Math.max(-1, Math.min(1, dy)) * scale;
+
+      /* Normalise against the viewport, not the avatar, so the head tracks
+         the pointer anywhere on the page and saturates near the edges rather
+         than recentring the moment the pointer moves away. */
+      const dx = Math.max(-1, Math.min(1, (event.clientX - cx) / (window.innerWidth * 0.5)));
+      const dy = Math.max(-1, Math.min(1, (event.clientY - cy) / (window.innerHeight * 0.5)));
+
+      wantYaw = dx * MAX_YAW;
+      wantPitch = -dy * MAX_PITCH;
+      wantGazeX = dx;
+      wantGazeY = dy;
     };
-    const onLeave = () => { wantX = 0; wantY = 0; };
+
+    /* Only recentre when the pointer actually leaves the window. */
+    const onLeave = () => { wantYaw = 0; wantPitch = 0; wantGazeX = 0; wantGazeY = 0; };
     window.addEventListener('pointermove', onMove, { passive: true });
-    window.addEventListener('pointerleave', onLeave);
+    document.addEventListener('pointerleave', onLeave);
+    window.addEventListener('blur', onLeave);
 
     const startedAt = performance.now();
 
     draw = function frame(now) {
       raf = requestAnimationFrame(frame);
       place();
-      curX += (wantX - curX) * EASE;
-      curY += (wantY - curY) * EASE;
+      yaw += (wantYaw - yaw) * EASE;
+      pitch += (wantPitch - pitch) * EASE;
+      gazeX += (wantGazeX - gazeX) * EASE;
+      gazeY += (wantGazeY - gazeY) * EASE;
       gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform2f(uOffset, curX, curY);
+      gl.uniform2f(uAngles, yaw, pitch);
+      gl.uniform2f(uGaze, gazeX, gazeY);
       gl.uniform1f(uTime, (now - startedAt) / 1000);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
@@ -245,10 +260,10 @@ function begin(canvas) {
 
     canvas._teardown = () => {
       window.removeEventListener('pointermove', onMove);
-      window.removeEventListener('pointerleave', onLeave);
+      document.removeEventListener('pointerleave', onLeave);
+      window.removeEventListener('blur', onLeave);
       gl.deleteBuffer(quad);
       gl.deleteTexture(photoTex);
-      if (useDepthMap) gl.deleteTexture(depthTex);
       gl.deleteProgram(program);
     };
   }).catch(() => { /* the photo stays exactly as it was */ });
