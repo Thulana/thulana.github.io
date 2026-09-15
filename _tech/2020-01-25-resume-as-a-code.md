@@ -1,5 +1,7 @@
 ---
 title: "CV as a code & CI/CD for your CV"
+categories: ["Engineering"]
+tags: ["CI/CD", "Automation", "Travis CI"]
 ---
 I know we are used to keep our CV (resume) in WORD format or in pdf. Most of us techies won't do the same. We love to keep everything as a code ( I mean literally everything :sweat_smile: ) Infrastructure as a code, platform as a code, service as a code, network as a code, why not your CV as a code ?
 

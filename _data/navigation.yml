@@ -2,6 +2,9 @@
 
 # main links links
 main:
+  - title: "Search"
+    url: /search/
+
   - title: "Archive"
     url: /year-archive/
 

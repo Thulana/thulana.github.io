@@ -1,5 +1,7 @@
 ---
 title: "MySQL - write a search query with dynamic parameters"
+categories: ["Engineering"]
+tags: ["MySQL", "Databases", "SQL"]
 ---
 
 Hey guys,

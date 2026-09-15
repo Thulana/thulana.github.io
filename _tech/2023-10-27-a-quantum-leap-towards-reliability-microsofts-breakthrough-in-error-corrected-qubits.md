@@ -1,5 +1,7 @@
 ---
 title: "A Quantum Leap Towards Reliability: Microsoft's Breakthrough in Error-Corrected Qubits"
+categories: ["Science"]
+tags: ["Quantum Computing", "Research"]
 ---
 
 Quantum computing has long been hailed as the next frontier in computational power, promising to tackle problems currently intractable for even the most powerful supercomputers. From designing new materials and drugs to optimizing complex logistical networks and breaking modern encryption, the potential applications are transformative. However, a formidable hurdle has consistently stood in the way of realizing this promise: the inherent fragility and error-proneness of quantum bits, or qubits.
@@ -21,7 +23,7 @@ Microsoft's innovation lies in its pursuit of **topological qubits**. Unlike tra
 Majorana zero modes are a peculiar type of particle predicted to be their own antiparticles. They are not fundamental particles but rather emergent phenomena that can arise in specific condensed matter systems, particularly in superconductors engineered in precise ways. What makes them so special for quantum computing is their non-abelian statistics: when two Majoranas are "braided" or moved around each other, their collective state changes in a way that is robust against local disturbances. Information is encoded not in the state of a single Majorana, but in the collective "braiding patterns" of pairs of Majoranas.
 
 <figure>
-  <img src="/images/dilution-refrigerator.png" alt="Dilution refrigerator housing a quantum chip">
+  <img src="/images/dilution-refrigerator.jpg" alt="Dilution refrigerator housing a quantum chip">
   <figcaption>A complex dilution refrigerator, essential for maintaining the extreme cryogenic temperatures required for stable quantum computation.</figcaption>
 </figure>
 

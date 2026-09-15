@@ -1,5 +1,7 @@
 ---
 title: "3I/ATLAS: An Interstellar Enigma at the Crossroads of Science and Wonder"
+categories: ["Science"]
+tags: ["Astronomy", "Space"]
 ---
 
 The cosmos occasionally sends us gifts – or perhaps, simply visitors – that challenge our understanding and ignite our imagination. One such recent arrival, the interstellar comet 3I/ATLAS, has become a focal point of intense scientific interest and vibrant public speculation. Unlike any comet originating from our solar system's distant Oort cloud, 3I/ATLAS hails from beyond the gravitational embrace of our Sun, offering a tantalizing glimpse into the chemistry and mechanics of other star systems. Its journey through our celestial neighborhood is not merely an astronomical event; it's a profound narrative unfolding, blending rigorous scientific inquiry with a sense of cosmic wonder and intriguing, sometimes controversial, hypotheses.
@@ -20,7 +22,7 @@ Beyond its chemical makeup, 3I/ATLAS has exhibited **unusual speed and trajector
 Perhaps one of the most remarkable aspects of 3I/ATLAS's visit is the **unprecedented possibility of two spacecraft potentially passing directly through its tail**. Such an encounter, if it materializes, would be a first for an interstellar object, offering an unparalleled chance to directly sample particles and gases from an extrasolar body. Missions like these could provide direct evidence of its composition, going beyond spectroscopic analysis, and offering invaluable insights into the building blocks of planets and life beyond our Sun.
 
 <figure>
-  <img src="/images/interstellar_comet_3iatlas_observation.png" alt="Conceptual art of 3I/ATLAS being observed">
+  <img src="/images/interstellar_comet_3iatlas_observation.jpg" alt="Conceptual art of 3I/ATLAS being observed">
 </figure>
 
 ### The "Wonder" and Speculation: Beyond the Scientific Consensus

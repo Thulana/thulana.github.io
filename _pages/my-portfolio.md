@@ -4,8 +4,8 @@ author_profile: false
 title: "Thulana Kannangara"
 excerpt: "Senior Software Engineer — distributed systems, and whatever else the problem needs"
 header:
-  image: blog_portfolio_banner.jpg
-  teaser: blog_portfolio_banner.jpg
+  image: banner-network.svg
+  teaser: banner-network.svg
 sidebar:
   - title: "Who am I"
     image: portfolio_user.jpeg

@@ -1,6 +1,7 @@
 ---
 title: "Where to start when the DB is the bottleneck"
-
+categories: ["Engineering"]
+tags: ["Databases", "Performance", "Debugging"]
 ---
 
 Debugging is one of the disciplines any developer should master. Yes, it's not straight forward as writing code. True, there's no hard and fast way of doing so. But with proper tools, You will get used to it. It's even harder to debug when an issue has no functional impact. One such case is performance. For every performance issue, there are two solutions,

@@ -7,8 +7,13 @@
   {% include /comments-providers/discourse.html %}
 {% when "facebook" %}
   {% include /comments-providers/facebook.html %}
-{% when "google-plus" %}
-  {% include /comments-providers/google-plus.html %}
+{% when "giscus" %}
+  {% comment %}giscus injects its own iframe where the widget markup sits, so it
+  loads nothing here. Until it is configured, comments.html falls back to the
+  Facebook widget, which still needs its SDK.{% endcomment %}
+  {% unless site.comments.giscus.repo_id and site.comments.giscus.category_id %}
+    {% include /comments-providers/facebook.html %}
+  {% endunless %}
 {% when "staticman" %}
   {% include /comments-providers/staticman.html %}
 {% when "custom" %}

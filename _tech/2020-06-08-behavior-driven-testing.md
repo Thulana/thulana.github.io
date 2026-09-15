@@ -1,6 +1,7 @@
 ---
 title: "Behavior Driven Testing in Enterprise Applications by Damian Perera"
-
+categories: ["Engineering"]
+tags: ["Testing", "BDD", "Software Design"]
 ---
 
 I work in a software organization where change is frequent, to say the least. As a developer and part of a larger team building an e-commerce platform, we’ve more or less adapted to frequent changes in project management, development methodologies, testing ideologies and of course now (given the current global pandemic), remote collaboration. This behavior-driven test strategy was developed within our team as a way to reduce bug leakages in mission-critical systems as our organization grew to include off-shore development teams (with product owners representing different customer interests)—and in order to ensure that the quality of the systems would not be affected by evolving engineering philosophies over the years.

@@ -1,0 +1,46 @@
+{% comment %}
+  giscus — comments backed by GitHub Discussions.
+
+  Needs four values in _config.yml under comments.giscus, all obtained from
+  https://giscus.app after enabling Discussions on the repository:
+    repo, repo_id, category, category_id
+{% endcomment %}
+
+<script src="https://giscus.app/client.js"
+        data-repo="{{ site.comments.giscus.repo }}"
+        data-repo-id="{{ site.comments.giscus.repo_id }}"
+        data-category="{{ site.comments.giscus.category | default: 'Announcements' }}"
+        data-category-id="{{ site.comments.giscus.category_id }}"
+        data-mapping="{{ site.comments.giscus.mapping | default: 'pathname' }}"
+        data-strict="1"
+        data-reactions-enabled="{{ site.comments.giscus.reactions_enabled | default: '1' }}"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+<script>
+  // Keep the giscus iframe in step with the site's own theme toggle.
+  (function () {
+    function giscusTheme() {
+      var attr = document.documentElement.getAttribute('data-theme');
+      if (attr === 'dark') return 'dark';
+      if (attr === 'light') return 'light';
+      return 'preferred_color_scheme';
+    }
+    function push() {
+      var frame = document.querySelector('iframe.giscus-frame');
+      if (!frame) return;
+      frame.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: giscusTheme() } } },
+        'https://giscus.app'
+      );
+    }
+    var btn = document.getElementById('theme-toggle');
+    if (btn) btn.addEventListener('click', function () { setTimeout(push, 0); });
+  })();
+</script>

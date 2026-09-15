@@ -1,5 +1,7 @@
 ---
 title: "Quantum Entanglement: Spooky Connections and Revolutionary Power"
+categories: ["Science"]
+tags: ["Quantum Computing", "Physics"]
 ---
 
 ## Introduction: The "Spooky" Heart of Quantum Mechanics

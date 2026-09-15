@@ -1,5 +1,7 @@
 ---
 title: "The Evolving Landscape of Computational Object Interaction: From Robotic Sensing to AI-Powered Detection and Data Management"
+categories: ["Science"]
+tags: ["AI", "Robotics", "Computer Vision"]
 ---
 
 ## Introduction

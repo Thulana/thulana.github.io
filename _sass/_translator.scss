@@ -65,12 +65,31 @@
 
 .ct-language {
   position: relative;
-  background: #00aced;
+  background: #007cae; // WCAG AA: 4.67:1 with #fff (was #00aced, 2.58:1)
   color: #fff;
   padding: 10px 0;
 }
 
-.ct-language:hover .ct-language__dropdown {
+/* The toggle is a real <button> for keyboard and screen-reader users;
+   it is styled to read as the plain label it always looked like. */
+.ct-language__toggle {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}
+
+.ct-language:hover .ct-language__dropdown,
+.ct-language:focus-within .ct-language__dropdown,
+.ct-language__dropdown.is-open {
   max-height: 200px;
   padding-top: 8px;
 }

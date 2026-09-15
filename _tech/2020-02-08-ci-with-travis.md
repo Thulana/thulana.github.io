@@ -1,5 +1,7 @@
 ---
 title: "CI with Travis"
+categories: ["Engineering"]
+tags: ["CI/CD", "Travis CI", "Automation"]
 ---
 
 Travis CI is a hosted CI server which is highly integrated with GitHub. It is really easy to enable Travis for a GitHub project. Hope you all familiar with the Continuous integration. Travis is free for your public repositories. Lets set play with Travis little bit.
