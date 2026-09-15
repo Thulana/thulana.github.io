@@ -8,12 +8,12 @@ GitHub Pages builds this site itself. There is no CI workflow in the repo — th
 | | |
 | --- | --- |
 | Repository | `Thulana/thulana.github.io` |
-| Source branch | `master`, from the repository root |
+| Source branch | `main`, from the repository root |
 | Build | GitHub Pages legacy Jekyll build |
 | Custom domain | `virtualdump.net` |
 | Live site | <https://virtualdump.net/> |
 
-Merging to `master` is the deploy. A build takes roughly a minute; watch it with:
+Merging to `main` is the deploy. A build takes roughly a minute; watch it with:
 
 ```bash
 gh run list --limit 5
@@ -45,7 +45,7 @@ bundle update github-pages
 ## The CV
 
 `assets/cv.pdf` is written by automation from a separate repository, which
-commits straight to `master` with a message like
+commits straight to `main` with a message like
 `Commit: <sha> - Pushing updated cv to the blog`. Do not hand-edit that file —
 the next automated push will overwrite it. Change the CV at its source repo.
 
