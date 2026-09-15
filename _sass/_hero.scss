@@ -13,14 +13,15 @@
 .page__hero--overlay {
   overflow: hidden;
 
-  /* Keep the title, lead and buttons above the canvas. */
+  /* Stacking inside the hero: shader field, then the node graph, then text. */
   .wrapper {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 }
 
-.hero-canvas {
+.hero-canvas,
+.hero-nodes {
   position: absolute;
   top: 0;
   left: 0;
@@ -37,3 +38,12 @@
     opacity: 1;
   }
 }
+
+.hero-canvas { z-index: 0; }
+
+/*
+   The node graph is transparent and sits over the shader field. It is the one
+   effect on this site that loads a library, so it is worth being strict about
+   where it loads: only on pages that actually have a hero.
+*/
+.hero-nodes { z-index: 1; }

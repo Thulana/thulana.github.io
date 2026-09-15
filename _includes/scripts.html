@@ -13,6 +13,14 @@
     pipeline that builds main.min.js.
   {% endcomment %}
   <script type="module" src="{{ base_path }}/assets/js/hero-shader.js"></script>
+
+  {% comment %}
+    Node graph. This one bundles three.js, so the page loads only a tiny
+    loader; the bundle itself arrives by dynamic import once the page is idle.
+    Pointing a module tag straight at the bundle defers execution but not the
+    fetch, which cost 2.7s of first paint.
+  {% endcomment %}
+  <script type="module" src="{{ base_path }}/assets/js/hero-nodes-loader.js"></script>
 {% endif %}
 
 <script>

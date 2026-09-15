@@ -10,6 +10,5 @@ _asset_bundler_cache
 _site
 codekit-config.json
 node_modules
-package-lock.json
 npm-debug.log*
 /vendor/

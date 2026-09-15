@@ -89,6 +89,29 @@ Because it is an ES module it never goes through the ES5-only `uglify`
 pipeline described in [running locally](running-locally.md#rebuilding-the-javascript),
 and it is loaded only on pages that actually have a hero.
 
+## The hero node graph
+
+Above the hero's shader field sits a second, transparent canvas carrying a
+graph of nodes and edges with packets travelling the links —
+`assets/js/src/hero-nodes.js`, bundled to `assets/js/hero-nodes.js`.
+
+This is the one effect on the site that uses a library. Everything else is
+raw WebGL, because a fullscreen quad does not need a scene graph; a graph
+with depth, per-object parallax and animated packets is where three.js
+starts paying for itself. It costs about 136 KB gzipped after tree-shaking,
+which is roughly three times the rest of the site's JavaScript put together,
+so it is scoped tightly: only pages with a hero, and only after the page is
+idle.
+
+**Do not point a `<script type="module">` straight at that bundle.** A module
+tag defers execution but not the fetch — the browser starts downloading it
+during HTML parsing, where it competes with CSS and fonts. Measured here that
+moved first contentful paint from 2.0s to 5.0s and the Lighthouse performance
+score from 96 to 67, before any of it had run. `hero-nodes-loader.js` is the
+few hundred bytes the page actually loads; it pulls the bundle in by dynamic
+import once the page is idle, and readers who have asked for reduced motion
+never download it at all. With the loader the score is back to 96.
+
 ## The site background
 
 Every page also carries a fixed canvas behind its content, drawn by
@@ -108,11 +131,14 @@ the surface colour moves off `<body>` and onto `<html>`, so the canvas at
 fallback is free — when the canvas never becomes visible, the `html` colour
 is the page background exactly as before.
 
-`assets/js/lib/shader-canvas.js` holds what both canvases share: context and
-program setup, the throttled loop, and the lifecycle rules — defer past load,
-stop when off-screen or hidden, never start under reduced motion, follow the
-theme. Adding another effect should mean a fragment shader and a palette,
-not another copy of those rules.
+`assets/js/lib/effect-runtime.js` holds the rules every effect obeys: defer
+past load, stop when off-screen or on a hidden tab, never start under reduced
+motion, follow the theme including the manual toggle.
+`assets/js/lib/shader-canvas.js` builds on it with what a fullscreen-quad
+shader needs — context and program setup and the throttled loop. Adding
+another effect should mean a fragment shader and a palette, not another copy
+of those rules; the node graph uses the same runtime without the shader
+plumbing.
 
 Measured on the homepage with both canvases: performance 94–95 against 96
 for the same page with neither, accessibility unchanged at 100, total
