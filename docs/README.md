@@ -14,7 +14,7 @@ hosted on GitHub Pages.
 ## Quick reference
 
 ```bash
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"   # macOS system Ruby is too old
+export PATH="$(brew --prefix ruby)/bin:$PATH"    # macOS system Ruby is too old
 bundle config set --local path vendor/bundle     # first-time setup
 bundle install
 bundle exec jekyll serve --config _config.yml,_config.dev.yml

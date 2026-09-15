@@ -2,19 +2,29 @@
 
 ## Prerequisites
 
-**Ruby 3.x.** This matters more than it sounds: the `github-pages` gem needs
-Ruby >= 2.7, and macOS ships 2.6 at `/usr/bin/ruby`. Using the system Ruby fails
-at `bundle install`. Homebrew's Ruby is keg-only, so it is not on `PATH` by
-default — put it there first:
+**Ruby 3.2 or newer.** This matters more than it sounds: `Gemfile.lock` pins
+activesupport 8.x, which requires Ruby >= 3.2, and macOS ships 2.6 at
+`/usr/bin/ruby`. Homebrew's Ruby is keg-only, so it is installed but not on
+`PATH` — put it there first, deriving the prefix rather than hardcoding it, as
+it differs between Apple Silicon and Intel:
 
 ```bash
-brew install ruby                                  # if not already installed
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-ruby -v                                            # expect 3.x, not 2.6
+brew install ruby                              # if not already installed
+export PATH="$(brew --prefix ruby)/bin:$PATH"
+ruby -v                                        # expect 3.2+, not 2.6
 ```
 
 Add that `export` to your `~/.zshrc` to avoid repeating it. A version manager
 (`rbenv`, `asdf`, `mise`) works just as well.
+
+An old Ruby does not fail with an honest version complaint. It gets as far as
+`jekyll-github-metadata` and dies with a Faraday adapter error that suggests
+nothing about versions.
+
+**Do not run `bundle install` to try to clear that error under an old Ruby.**
+Bundler will resolve the entire tree down to versions that satisfy the old
+interpreter and rewrite `Gemfile.lock` in place — activesupport 8.x quietly
+becomes 3.x. Recover with `git checkout -- Gemfile.lock`.
 
 **Node.js** is only needed to rebuild the bundled JavaScript — not to write
 posts.
@@ -70,6 +80,19 @@ A build that ends `done in N seconds` succeeded, warnings notwithstanding.
 
 ## Things that trip people up
 
+- **Browse `localhost`, never `127.0.0.1`.** `_config.dev.yml` sets
+  `url: http://localhost:4000`, so absolute asset URLs carry that origin.
+  Reaching the site through `127.0.0.1:4000` makes the browser treat them as
+  cross-origin, and Font Awesome and `manifest.json` fail with CORS errors.
+  Icons render as empty boxes and the console fills with red — all of it an
+  artifact of the hostname, not a defect in the site.
+- **Port 4000 is often already in use.** A second server prints a long
+  `EADDRINUSE` stack trace. Check with
+  `lsof -nP -iTCP:4000 -sTCP:LISTEN` and reuse whatever is already running;
+  it regenerates on save like any other.
+- **The server follows the working tree.** Switching branches changes what is
+  served without any visible signal, so a change can appear broken purely
+  because you moved to a branch without it.
 - **`_config.yml` is not hot-reloaded.** Changing either config file needs the
   server restarted.
 - **One bad file fails the whole build.** A Liquid or front-matter error is
@@ -94,6 +117,14 @@ npm install
 npm run build:js     # concatenate + minify into assets/js/main.min.js
 npm run watch:js     # same, on every save
 ```
+
+**The pipeline is ES5-only.** `uglify-js` 2.x cannot parse ES6 or later, so
+arrow functions, `let`/`const`, template literals, spread and classes in
+`_main.js` or the plugins will break the build. Anything needing modern syntax
+belongs in its own file, loaded as a module from `_includes/scripts.html`
+rather than routed through `npm run build:js`. The concatenation order is the
+argument list of the `uglify` script in `package.json`: jQuery stays first,
+`_main.js` stays last because it calls into the plugins ahead of it.
 
 `assets/js/main.min.js` is committed, because GitHub Pages does not run Node.
 Rebuild it and stage it in the same commit as the source change.
