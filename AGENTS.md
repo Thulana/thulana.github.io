@@ -19,6 +19,19 @@ is Markdown; there is no application code and no test suite.
 | Branch, commit, open a PR | [docs/contributing.md](docs/contributing.md) |
 | Understand publishing | [docs/deployment.md](docs/deployment.md) |
 
+## Skills
+
+`.claude/skills/` holds procedures for the repetitive jobs. They route to the
+documentation above rather than restating it, so the docs stay the single
+source of truth — if a skill and a document disagree, the document wins and
+the skill needs fixing.
+
+| Skill | For |
+| --- | --- |
+| `dev-server` | Serve the site and verify a change in a real browser |
+| `new-post` | Add a post in the right collection with the right front matter |
+| `rebuild-js` | Regenerate `assets/js/main.min.js` after a JS change |
+
 ## Non-negotiable constraints
 
 **`main` is production.** Merging deploys straight to the live site. Always
@@ -31,7 +44,7 @@ link or malformed front matter is fine; editing someone's voice is not.
 **Verify the build before you claim a change works.** Local Ruby matters here:
 
 ```bash
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"   # macOS system Ruby is too old
+export PATH="$(brew --prefix ruby)/bin:$PATH"    # macOS system Ruby is too old
 bundle install
 bundle exec jekyll build --config _config.yml,_config.dev.yml
 ```
