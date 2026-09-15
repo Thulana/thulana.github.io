@@ -89,6 +89,37 @@ Because it is an ES module it never goes through the ES5-only `uglify`
 pipeline described in [running locally](running-locally.md#rebuilding-the-javascript),
 and it is loaded only on pages that actually have a hero.
 
+## The site background
+
+Every page also carries a fixed canvas behind its content, drawn by
+`assets/js/site-background.js`: a parallax starfield, a two-source
+interference pattern, and a comet on a 23-second cycle — the subjects this
+blog actually writes about.
+
+Body text sits directly on top of it, which is the constraint that decides
+everything else. The amplitudes are a few percent of luminance and nothing
+moves quickly, so it should register as texture rather than as animation. If
+you raise them, check a long post in both themes before assuming it still
+reads.
+
+The layering is a small trick worth knowing before editing `_sass/_site-bg.scss`:
+the surface colour moves off `<body>` and onto `<html>`, so the canvas at
+`z-index: -1` has something to composite against. That is also why the
+fallback is free — when the canvas never becomes visible, the `html` colour
+is the page background exactly as before.
+
+`assets/js/lib/shader-canvas.js` holds what both canvases share: context and
+program setup, the throttled loop, and the lifecycle rules — defer past load,
+stop when off-screen or hidden, never start under reduced motion, follow the
+theme. Adding another effect should mean a fragment shader and a palette,
+not another copy of those rules.
+
+Measured on the homepage with both canvases: performance 94–95 against 96
+for the same page with neither, accessibility unchanged at 100, total
+blocking time flat at 50ms and no layout shift. Those numbers come from
+software WebGL in headless Chrome, where a fullscreen fragment shader
+rasterises on the CPU; on a real GPU it is far cheaper.
+
 ## Defaults worth knowing
 
 `_config.yml` sets per-collection defaults so individual posts stay clean. Every

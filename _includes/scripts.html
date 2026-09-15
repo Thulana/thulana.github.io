@@ -1,5 +1,11 @@
 <script src="{{ base_path }}/assets/js/main.min.js"></script>
 
+{% comment %}
+  Site background. A module, so it defers by default, and it shares its
+  lifecycle rules with the hero via lib/shader-canvas.js.
+{% endcomment %}
+<script type="module" src="{{ base_path }}/assets/js/site-background.js"></script>
+
 {% if page.header.overlay_color or page.header.overlay_image %}
   {% comment %}
     Hero background shader. A module, so it defers by default and never
