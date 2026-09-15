@@ -269,6 +269,24 @@ function start() {
   };
 }
 
+/*
+   Booting WebGL costs main-thread time: module parse, context creation and a
+   shader compile. Measured against the same page without it, doing that during
+   load pushed JS bootup from 0.4s to 0.7s and dragged LCP with it, for an
+   effect nobody can see yet because the poster frame is already on screen.
+
+   So wait until the page has finished loading and the main thread is idle.
+   Nothing is lost visually — the SVG is showing the whole time — and first
+   paint stops competing with a decoration.
+*/
+function whenIdle(fn) {
+  const run = () => (window.requestIdleCallback
+    ? window.requestIdleCallback(fn, { timeout: 2000 })
+    : setTimeout(fn, 200));
+  if (document.readyState === 'complete') run();
+  else window.addEventListener('load', run, { once: true });
+}
+
 if (canvas) {
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   let stop = null;
@@ -282,5 +300,5 @@ if (canvas) {
   };
 
   motionQuery.addEventListener('change', sync);
-  sync();
+  whenIdle(sync);
 }

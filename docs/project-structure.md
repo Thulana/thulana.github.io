@@ -74,6 +74,13 @@ The canvas starts transparent and only fades in once it has a frame, via an
 no path that renders an empty box. It stops drawing when scrolled out of view
 or the tab is hidden, renders at 0.7× CSS pixels, and caps at 30fps.
 
+It also waits for the `load` event and then an idle callback before touching
+WebGL at all. That is not incidental: booting it during page load measured a
+Lighthouse performance score of 73 against 96 for the same page without it,
+with LCP at 5.0s against 2.4s. Deferring it returns the page to baseline
+(98 / 2.1s) while looking identical, because the poster frame is on screen
+throughout. Anything added here later should keep that ordering.
+
 Its palette is interpolated from the same values as the SVG and follows the
 `data-theme` attribute and the OS colour scheme, so the theme toggle repaints
 it rather than leaving a mismatched background.
