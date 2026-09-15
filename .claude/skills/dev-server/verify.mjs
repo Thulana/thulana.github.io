@@ -91,6 +91,16 @@ const PROBE = `(() => {
       .filter(i => i.w === 0 || (i.src || '').includes('feature-')),
     giscusScript:    !!document.querySelector('script[src*="giscus"]'),
     giscusIframe:    !!document.querySelector('iframe.giscus-frame'),
+    hero: (() => {
+      const c = document.querySelector('.hero-canvas');
+      if (!c) return null;
+      return {
+        live: c.classList.contains('is-live'),
+        cssSize: c.clientWidth + 'x' + c.clientHeight,
+        drawingBuffer: c.width + 'x' + c.height,
+        webgl: !!(c.getContext('webgl') || c.getContext('experimental-webgl')),
+      };
+    })(),
   }, null, 2);
 })()`;
 

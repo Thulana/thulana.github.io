@@ -56,8 +56,14 @@ node .claude/skills/dev-server/verify.mjs \
 | `--port` | Debugging port, default 9333 |
 
 It reports computed animation and transition durations, images that failed to
-decode, whether the giscus comment iframe mounted, and console errors. Needs
-Node 22+ for global `fetch` and `WebSocket`; no dependencies.
+decode, whether the giscus comment iframe mounted, the hero canvas state (live,
+CSS size, drawing buffer, WebGL availability) on pages that have one, and
+console errors. Needs Node 22+ for global `fetch` and `WebSocket`; no
+dependencies.
+
+Chrome needs software WebGL in headless mode for the hero canvas to paint. If
+`hero.webgl` comes back false, relaunch with `--enable-unsafe-swiftshader` and
+without `--disable-gpu`.
 
 **Look at the screenshot.** A blank or half-painted frame is a failure even
 when the probe output reads fine.
