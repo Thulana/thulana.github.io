@@ -230,3 +230,28 @@
     }
   }
 }
+/*
+   Particle portrait overlay. The canvas is positioned over the photo's
+   rendered box by JS, because that box carries padding and a border at the
+   large breakpoint. The <img> stays beneath it and shows whenever the canvas
+   is not live, so no WebGL or reduced motion simply leaves the photo.
+*/
+.author__avatar {
+  position: relative;
+}
+
+.author-portrait {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  -webkit-transition: opacity 0.5s ease-in-out;
+          transition: opacity 0.5s ease-in-out;
+
+  &.is-live {
+    opacity: 1;
+  }
+}

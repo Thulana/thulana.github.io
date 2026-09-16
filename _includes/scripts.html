@@ -6,6 +6,22 @@
 {% endcomment %}
 <script type="module" src="{{ base_path }}/assets/js/site-background.js"></script>
 
+{% comment %}
+  Particle portrait. Raw WebGL, a few KB — this page has no other reason to
+  load the three.js bundle.
+
+  The condition mirrors sidebar.html, plus an exclusion for splash. _config.yml
+  defaults author_profile to true for every page, so the flag is set on the
+  homepage as well, but the splash layout renders no sidebar and therefore no
+  avatar — without the exclusion the homepage fetches a module with nothing to
+  attach to.
+{% endcomment %}
+{% if page.author_profile or layout.author_profile %}
+  {% unless page.layout == 'splash' or layout.layout == 'splash' %}
+    <script type="module" src="{{ base_path }}/assets/js/author-portrait.js"></script>
+  {% endunless %}
+{% endif %}
+
 {% if page.header.overlay_color or page.header.overlay_image %}
   {% comment %}
     Hero background shader. A module, so it defers by default and never
