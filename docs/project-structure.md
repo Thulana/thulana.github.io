@@ -89,6 +89,29 @@ Because it is an ES module it never goes through the ES5-only `uglify`
 pipeline described in [running locally](running-locally.md#rebuilding-the-javascript),
 and it is loaded only on pages that actually have a hero.
 
+## Module scripts must be root-relative
+
+Every `<script type="module">` on this site uses a root-relative `src`
+(`/assets/js/...`), never `{{ base_path }}`. This is load-bearing and is worth
+understanding before anyone "tidies" it.
+
+`base_path` is absolute, built from `site.url`. The site is served at the apex
+domain, so referencing a module at the `www` host — or any host other than the
+one the visitor typed — makes it a **cross-origin** request. ES modules are
+fetched in CORS mode, unlike classic scripts, and GitHub Pages sends no
+`Access-Control-Allow-Origin`. The browser then blocks every module silently:
+all the animation dies while `main.min.js`, a classic script, carries on
+working, so the site looks fine and merely has nothing moving on it.
+
+This shipped to production once, and took a build with the production config
+to spot, because everything works locally where the hostname happens to match.
+A root-relative path is same-origin whichever hostname the visitor arrived at,
+which is also why the effects now survive being loaded over `127.0.0.1`.
+
+Related: `url` in `_config.yml` is the apex domain and `baseurl` is empty,
+because the site is served at the root. `baseurl: "/"` was producing
+`//double//slashes` in every emitted URL.
+
 ## The hero node graph
 
 Above the hero's shader field sits a second, transparent canvas carrying a

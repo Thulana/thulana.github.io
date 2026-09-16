@@ -1,10 +1,21 @@
+{% comment %}
+  Module scripts use a root-relative src on purpose, not {{ base_path }}.
+
+  base_path is absolute and built from site.url. The site is served at the
+  apex domain, so an absolute www URL (or vice versa) makes these a
+  cross-origin request — and ES modules are fetched in CORS mode, unlike
+  classic scripts. GitHub Pages sends no Access-Control-Allow-Origin, so the
+  browser blocks them silently: every animation dies while main.min.js, being
+  a classic script, keeps working. A root-relative path is same-origin on
+  whichever hostname the visitor arrived at.
+{% endcomment %}
 <script src="{{ base_path }}/assets/js/main.min.js"></script>
 
 {% comment %}
   Site background. A module, so it defers by default, and it shares its
   lifecycle rules with the hero via lib/shader-canvas.js.
 {% endcomment %}
-<script type="module" src="{{ base_path }}/assets/js/site-background.js"></script>
+<script type="module" src="/assets/js/site-background.js"></script>
 
 {% comment %}
   Particle portrait. Raw WebGL, a few KB — this page has no other reason to
@@ -18,7 +29,7 @@
 {% endcomment %}
 {% if page.author_profile or layout.author_profile %}
   {% unless page.layout == 'splash' or layout.layout == 'splash' %}
-    <script type="module" src="{{ base_path }}/assets/js/author-portrait.js"></script>
+    <script type="module" src="/assets/js/author-portrait.js"></script>
   {% endunless %}
 {% endif %}
 
@@ -28,7 +39,7 @@
     blocks first paint, and so it stays clear of the ES5-only uglify
     pipeline that builds main.min.js.
   {% endcomment %}
-  <script type="module" src="{{ base_path }}/assets/js/hero-shader.js"></script>
+  <script type="module" src="/assets/js/hero-shader.js"></script>
 
   {% comment %}
     Node graph. This one bundles three.js, so the page loads only a tiny
@@ -36,7 +47,7 @@
     Pointing a module tag straight at the bundle defers execution but not the
     fetch, which cost 2.7s of first paint.
   {% endcomment %}
-  <script type="module" src="{{ base_path }}/assets/js/hero-nodes-loader.js"></script>
+  <script type="module" src="/assets/js/hero-nodes-loader.js"></script>
 {% endif %}
 
 <script>
