@@ -1,26 +1,19 @@
 /* ==========================================================================
-   Shared WebGL canvas
+   Shader canvas
 
-   Everything two fullscreen-quad shaders need and nothing they do not: a
-   context, a program, one triangle covering the viewport, a throttled render
-   loop, and the lifecycle rules that keep a decoration from costing anything
-   it should not.
+   Everything a fullscreen-quad shader needs and nothing more: a context, a
+   program, one triangle covering the viewport, and a throttled render loop.
 
-   Those rules are the point of this file, because they are easy to get wrong
-   once per effect:
-
-   - Never initialise during page load. Creating a context and compiling a
-     shader competes with first paint; measured on this site it moved LCP from
-     2.4s to 5.0s. Wait for load, then for an idle callback.
-   - Never run when nobody is looking: off-screen, or a hidden tab.
-   - Never run at all when the reader has asked for reduced motion, and react
-     if they change that while the page is open.
-   - Follow the site's theme, including the manual toggle, not just the OS.
+   Lifecycle — defer past load, stop when unseen, never start under reduced
+   motion, follow the theme — lives in effect-runtime.js and is shared with
+   every other effect on the site.
 
    The caller supplies a fragment shader and a palette per scheme. Every
    palette key becomes a `vec3` uniform named after it, interpolated on a
    theme change so nothing snaps.
    ========================================================================== */
+
+import { prefersDark, watchRuntime, mountEffect } from './effect-runtime.js';
 
 const VERTEX = `
 attribute vec2 a_pos;
@@ -37,21 +30,6 @@ function compile(gl, type, source) {
     throw new Error(`shader failed to compile: ${log}`);
   }
   return shader;
-}
-
-function prefersDark() {
-  const explicit = document.documentElement.getAttribute('data-theme');
-  if (explicit === 'dark') return true;
-  if (explicit === 'light') return false;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
-}
-
-function whenIdle(fn) {
-  const run = () => (window.requestIdleCallback
-    ? window.requestIdleCallback(fn, { timeout: 2000 })
-    : setTimeout(fn, 200));
-  if (document.readyState === 'complete') run();
-  else window.addEventListener('load', run, { once: true });
 }
 
 function begin(canvas, { fragment, palettes, renderScale, fps, fadeMs }) {
@@ -100,7 +78,7 @@ function begin(canvas, { fragment, palettes, renderScale, fps, fadeMs }) {
   let to = current;
   let fadeStart = -1;
 
-  const applyTheme = () => {
+  const onTheme = () => {
     const next = paletteFor();
     if (next === to) return;
     from = current;
@@ -156,70 +134,19 @@ function begin(canvas, { fragment, palettes, renderScale, fps, fadeMs }) {
     cancelAnimationFrame(raf);
   };
 
-  const observer = new IntersectionObserver(
-    entries => (entries[0].isIntersecting && !document.hidden ? play() : pause()),
-    { threshold: 0 },
-  );
-  observer.observe(canvas);
-
-  const onVisibility = () => (document.hidden ? pause() : play());
-  document.addEventListener('visibilitychange', onVisibility);
-
-  const themeObserver = new MutationObserver(applyTheme);
-  themeObserver.observe(document.documentElement, {
-    attributes: true, attributeFilter: ['data-theme'],
-  });
-  const schemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  schemeQuery.addEventListener('change', applyTheme);
-
-  const onLost = event => {
-    event.preventDefault();
-    pause();
-    canvas.classList.remove('is-live');
-  };
-  canvas.addEventListener('webglcontextlost', onLost);
+  const unwatch = watchRuntime(canvas, { play, pause, onTheme });
 
   canvas.classList.add('is-live');
   play();
 
   return function stop() {
     pause();
-    observer.disconnect();
-    themeObserver.disconnect();
-    document.removeEventListener('visibilitychange', onVisibility);
-    schemeQuery.removeEventListener('change', applyTheme);
-    canvas.removeEventListener('webglcontextlost', onLost);
+    unwatch();
     canvas.classList.remove('is-live');
   };
 }
 
-/**
- * Mount a fullscreen-quad shader on the first canvas matching `selector`.
- * Returns silently when there is no such canvas, so a module can be loaded
- * on a page that does not use it.
- */
 export function mountShaderCanvas(selector, options) {
-  const canvas = document.querySelector(selector);
-  if (!canvas) return;
-
-  const settings = {
-    renderScale: 0.7,
-    fps: 30,
-    fadeMs: 400,
-    ...options,
-  };
-
-  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let stop = null;
-
-  const sync = () => {
-    if (motionQuery.matches) {
-      if (stop) { stop(); stop = null; }
-    } else if (!stop) {
-      stop = begin(canvas, settings);
-    }
-  };
-
-  motionQuery.addEventListener('change', sync);
-  whenIdle(sync);
+  const settings = { renderScale: 0.7, fps: 30, fadeMs: 400, ...options };
+  mountEffect(selector, canvas => begin(canvas, settings));
 }

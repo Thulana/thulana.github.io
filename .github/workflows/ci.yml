@@ -1,0 +1,51 @@
+# Build checks. This does not deploy: GitHub Pages still builds and publishes
+# the site itself from the default branch. The job exists to catch the two
+# things that are otherwise only found in production.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          # Gemfile.lock pins activesupport 8.x, which needs >= 3.2.
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      # The JavaScript bundles are committed, because GitHub Pages does not run
+      # Node. That makes "edited the source, forgot to rebuild" a silent way to
+      # ship nothing, so rebuild here and fail if the result differs from what
+      # is in the tree.
+      - name: Rebuild bundles
+        run: npm run build
+
+      - name: Fail if a committed bundle is stale
+        run: |
+          if ! git diff --exit-code -- assets/js/; then
+            echo "::error::A committed bundle is out of date. Run 'npm run build' and commit the result."
+            exit 1
+          fi
+
+      # A Liquid or front-matter error fails the whole build, not one page.
+      - name: Build site
+        env:
+          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bundle exec jekyll build

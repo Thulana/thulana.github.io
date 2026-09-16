@@ -114,9 +114,16 @@ Only relevant if you touch `assets/js/_main.js` or `assets/js/plugins/`:
 
 ```bash
 npm install
+npm run build        # everything below, in one go
 npm run build:js     # concatenate + minify into assets/js/main.min.js
-npm run watch:js     # same, on every save
+npm run build:bundles # esbuild assets/js/src/* into committed bundles
+npm run watch:js     # rebuild main.min.js on every save
 ```
+
+`package-lock.json` is committed, so `npm ci` reproduces exactly the versions
+that produced the committed bundles. CI rebuilds them on every pull request
+and fails if the result differs from what is in the tree, which is what stops
+"edited the source, forgot to rebuild" from silently shipping nothing.
 
 **The pipeline is ES5-only.** `uglify-js` 2.x cannot parse ES6 or later, so
 arrow functions, `let`/`const`, template literals, spread and classes in
