@@ -8,6 +8,38 @@ I finally stopped renting a server and put one on my own desk. A small Beelink m
 
 We techies love owning our stack. :sweat_smile: Infrastructure as a code, CV as a code, blog as a code - and at some point you look at your monthly cloud bill and think, why is my always-on box in someone else's datacentre? So let's get cracking.
 
+## Why a mini PC and not a real server ?
+
+Here it is, next to the router, which gives you the scale better than any spec sheet:
+
+<figure>
+  <img src="{{ base_path }}/images/beelink-ser9-pro-home-server.jpg" alt="A small silver Beelink mini PC sitting on a dark wooden shelf beside a tall white home router, with cables coiled behind them. The mini PC is roughly a third the height of the router.">
+</figure>
+
+I very nearly bought a proper tower with a discrete GPU, and I'm glad I didn't. The thing about a home server is that the specs are only half the decision. The other half is that it has to live in your home, run all the time, and not annoy you. Four things decided it:
+
+**It's cheap.** Not cheap in absolute terms, but cheap against the alternative. A tower with a GPU that would genuinely beat this at inference costs several times as much before you've bought a case, a PSU or the drives.
+
+**It's quiet.** This sits in a living space, not a rack in a basement. It's on 24/7. A server you can hear is a server you resent, and a resented server gets unplugged. Even with the iGPU pinned to its top clock - which I'd normally expect to be the thing that makes a small box audible - I can't hear it from the sofa.
+
+**The TDP is small.** The processor is a 65 W part, and the box idles well below that. Something that never turns off is a power bill rather than a purchase, so the number that matters is watts over a year, not peak performance. A desktop with a discrete GPU can sit at idle drawing what this thing pulls flat out.
+
+**It takes no space.** One shelf, one power brick, one network cable. No rack, no noise enclosure, no rethinking where furniture goes.
+
+And honestly, one more: I wanted to find out whether an integrated GPU could do this at all. That turned out to be the most interesting part of the whole build, and about two thirds of this article.
+
+### What I gave up
+
+Being straight about it, because these are real:
+
+- **The RAM is soldered.** 24 GB is 24 GB forever. That's not a limit I can spend my way out of later.
+- **There's no upgrade path for the GPU.** No slot, no card, no future where I drop something faster in.
+- **The memory bandwidth is the ceiling on everything**, and it's the reason the benchmark section below lands where it does.
+
+That first point is also why the rest of this article leans so hard on the setup being reproducible. The box is disposable, so the build instructions have to outlive it.
+
+Oh, and see that pinhole on the front panel, next to the power button? Remember it. It comes up later, and not in a good way. :sweat_smile:
+
 ## What's in the box ?
 
 Nothing exotic, and that's deliberate. A Beelink SER9 Pro:
