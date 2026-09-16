@@ -92,7 +92,7 @@ In the locations, we can define where should the request go according to the url
 To identify if our server works, add a index.html file within html folder inside config folder. Now everything is ready. Lets start the engineX.
 
 ```
-docker run -d -p 9090:443 -p 7070:80 -v $PWD/log:/var/log/nginx -v $PWD/ssl:/etc/ssl/certs -v $PWD/private:/etc/ssl/private -v $PWD/config:/etc/nginx — name nginx-server nginx
+docker run -d -p 9090:443 -p 7070:80 -v $PWD/log:/var/log/nginx -v $PWD/ssl:/etc/ssl/certs -v $PWD/private:/etc/ssl/private -v $PWD/config:/etc/nginx --name nginx-server nginx
 ```
 
 Here what we do is map localhost:9090 port with nginx 443 and localhost:7070 with 80. And then all the folders we created are marked and linked as volumes so data persists both locally and internally. Then we run a container in name nginx-server from nginx.

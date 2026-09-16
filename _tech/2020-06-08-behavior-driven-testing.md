@@ -4,7 +4,7 @@ categories: ["Engineering"]
 tags: ["Testing", "BDD", "Software Design"]
 ---
 
-I work in a software organization where change is frequent, to say the least. As a developer and part of a larger team building an e-commerce platform, we’ve more or less adapted to frequent changes in project management, development methodologies, testing ideologies and of course now (given the current global pandemic), remote collaboration. This behavior-driven test strategy was developed within our team as a way to reduce bug leakages in mission-critical systems as our organization grew to include off-shore development teams (with product owners representing different customer interests)—and in order to ensure that the quality of the systems would not be affected by evolving engineering philosophies over the years.
+I work in a software organization where change is frequent, to say the least. As a developer and part of a larger team building an e-commerce platform, we’ve more or less adapted to frequent changes in project management, development methodologies, testing ideologies and of course now (given the current global pandemic), remote collaboration. This behavior-driven test strategy was developed within our team as a way to reduce bug leakages in mission-critical systems as our organization grew to include off-shore development teams (with product owners representing different customer interests) - and in order to ensure that the quality of the systems would not be affected by evolving engineering philosophies over the years.
 
 <figure>
   <img src="{{ base_path }}/images/post5-1.jpeg" alt="BDD">
@@ -26,7 +26,7 @@ An example would be a user wanting to know the delivery ETA of an order while in
 
 As and when your product grows, so will the requirements of your target users and in extension the demands of your product owner. This is when our software organization started to expand and grow, breaking off into smaller specialized business units (or verticals) focused on developing a part of a user experience like tracking the delivery of an order rather than taking tickets from a common project backlog in a round-robin manner.
 
-When you have teams working on different aspects of a customer’s experience you tend to get new features that require changes across many sub-systems — and having many developers building multiple features across the entire stack at the same time is a really big risk if you don’t have a proper test suite.
+When you have teams working on different aspects of a customer’s experience you tend to get new features that require changes across many sub-systems - and having many developers building multiple features across the entire stack at the same time is a really big risk if you don’t have a proper test suite.
 
 <figure>
   <img src="{{ base_path }}/images/post5-3.png" alt="When to Mock?">
@@ -44,7 +44,7 @@ True. But once you’ve included tests for every edge-case, bug, and race-condit
   <img src="{{ base_path }}/images/post5-4.png" alt="Test pyramid">
 </figure>
 
-Although we had more than 80% coverage in all our unit test suites the reason it looks more like an ice-cream cone than a pyramid was because we added on so many integration and E2E test cases that towards the end some integration suites would take over 60 minutes to complete — that’s 1 hour wasted by a developer waiting to know if their code change broke another feature in the service — and with the suite running on a CI server it’s still going to be difficult to understand the entire scope of the broken tests and narrow down the impacted area to debug the faulty logic.
+Although we had more than 80% coverage in all our unit test suites the reason it looks more like an ice-cream cone than a pyramid was because we added on so many integration and E2E test cases that towards the end some integration suites would take over 60 minutes to complete - that’s 1 hour wasted by a developer waiting to know if their code change broke another feature in the service - and with the suite running on a CI server it’s still going to be difficult to understand the entire scope of the broken tests and narrow down the impacted area to debug the faulty logic.
 
 ## The Solution
 
@@ -74,11 +74,11 @@ Here the name of the test case should represent the expectation of the service t
 
 ## The Results
 
-Since these new tests execute along with the existing unit tests, and since the database and external APIs are mocked, we’ve seen around 1500 test cases completing within a couple of minutes — that’s around 95% faster than what our previous integration test suite running on a CI server would have taken while more or less covering the same test cases.
+Since these new tests execute along with the existing unit tests, and since the database and external APIs are mocked, we’ve seen around 1500 test cases completing within a couple of minutes - that’s around 95% faster than what our previous integration test suite running on a CI server would have taken while more or less covering the same test cases.
 
 While we didn’t completely flip around our test ice-cream cone, we were able to grow our unit test layer to include many test cases that would otherwise have required real database and third-party service calls, leaving our integration and E2E test suites to cover only the most vital flows (the happy and bad paths).
 
-Now if a developer working from anywhere in the world was building a feature or fixing a bug and inadvertently broke any established API behaviours, they would see the exact impact of the change in their local environment itself and fix it without waiting for a quality gate failure or a bug reported in a cloud environment — which significantly reduces the number of bug leakages as well as the time to completely release a ticket.
+Now if a developer working from anywhere in the world was building a feature or fixing a bug and inadvertently broke any established API behaviours, they would see the exact impact of the change in their local environment itself and fix it without waiting for a quality gate failure or a bug reported in a cloud environment - which significantly reduces the number of bug leakages as well as the time to completely release a ticket.
 
 **Disclaimer:** The testing strategy described here is not meant to be a replacement for unit tests.
 
